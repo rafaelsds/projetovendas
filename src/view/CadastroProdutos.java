@@ -5,12 +5,19 @@
  */
 package view;
 
+import java.awt.Dimension;
+
 /**
  *
  * @author comp16
  */
 public class CadastroProdutos extends javax.swing.JInternalFrame {
-
+    
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
+    
     /**
      * Creates new form CadastroProdutos
      */
@@ -68,6 +75,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Produto"));
 
         jLabel1.setText("Código");
+
+        jTextField1.setEditable(false);
 
         jButton1.setText("...");
 

@@ -35,6 +35,7 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("Cadastro de Grupo");
 
         jLabel1.setText("Código");
