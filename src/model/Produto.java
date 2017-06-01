@@ -6,24 +6,24 @@ public class Produto {
     private String nome;
     private String referencia;
     private String codigoBarras;
-    private String marca;
-    private String grupo;
+    private Integer idMarca;
+    private Integer idGrupo;
     private Integer estoque;
     private Integer precoVenda;
     private Integer precoCusto;
     private Integer precoPrazo;
     private String ncm;
     private String cst;
-    private String tipo;
-
+    private Integer tipoDeVenda;
+    
     public Integer getId() {
         return id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -48,20 +48,20 @@ public class Produto {
         this.codigoBarras = codigoBarras;
     }
 
-    public String getMarca() {
-        return marca;
+    public Integer getIdMarca() {
+        return idMarca;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setIdMarca(Integer idMarca) {
+        this.idMarca = idMarca;
     }
 
-    public String getGrupo() {
-        return grupo;
+    public Integer getIdGrupo() {
+        return idGrupo;
     }
 
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
+    public void setIdGrupo(Integer idGrupo) {
+        this.idGrupo = idGrupo;
     }
 
     public Integer getEstoque() {
@@ -112,12 +112,14 @@ public class Produto {
         this.cst = cst;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Integer getTipoDeVenda() {
+        return tipoDeVenda;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoDeVenda(Integer tipoDeVenda) {
+        this.tipoDeVenda = tipoDeVenda;
     }
+
+    
     
 }

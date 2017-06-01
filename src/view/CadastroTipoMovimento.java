@@ -9,12 +9,12 @@ package view;
  *
  * @author laine
  */
-public class TipoMovimento extends javax.swing.JInternalFrame {
+public class CadastroTipoMovimento extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TipoMovimento
      */
-    public TipoMovimento() {
+    public CadastroTipoMovimento() {
         initComponents();
     }
 

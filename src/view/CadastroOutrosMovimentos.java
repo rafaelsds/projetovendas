@@ -9,12 +9,12 @@ package view;
  *
  * @author laine
  */
-public class OutrosMovimentos extends javax.swing.JInternalFrame {
+public class CadastroOutrosMovimentos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form OutrosMovimentos
      */
-    public OutrosMovimentos() {
+    public CadastroOutrosMovimentos() {
         initComponents();
     }
 
