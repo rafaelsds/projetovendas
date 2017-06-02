@@ -43,6 +43,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemGrupo = new javax.swing.JMenuItem();
         jMenuItemMarca = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemMunicipio1 = new javax.swing.JMenuItem();
         jMenuItemMunicipio = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -124,6 +125,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemMarca);
         jMenuCadastro.add(jSeparator1);
+
+        jMenuItemMunicipio1.setText("UF");
+        jMenuItemMunicipio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMunicipio1ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMunicipio1);
 
         jMenuItemMunicipio.setText("Municipio");
         jMenuItemMunicipio.addActionListener(new java.awt.event.ActionListener() {
@@ -252,6 +261,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItemMunicipio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMunicipio1ActionPerformed
+        CadastroUf cadastro = new CadastroUf();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMunicipio1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,6 +316,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemGrupo;
     private javax.swing.JMenuItem jMenuItemMarca;
     private javax.swing.JMenuItem jMenuItemMunicipio;
+    private javax.swing.JMenuItem jMenuItemMunicipio1;
     private javax.swing.JMenuItem jMenuItemPessoa;
     private javax.swing.JMenuItem jMenuItemProdutos;
     private javax.swing.JMenuItem jMenuItemVenda;
