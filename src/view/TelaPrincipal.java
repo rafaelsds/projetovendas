@@ -38,14 +38,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemProdutos = new javax.swing.JMenuItem();
         jMenuItemPessoa = new javax.swing.JMenuItem();
         jMenuItemVenda = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItemGrupo = new javax.swing.JMenuItem();
         jMenuItemMarca = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItemMunicipio = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuEditar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Vendas");
 
         jDesktopPanelPrincipal.setBackground(new java.awt.Color(51, 135, 245));
 
@@ -86,6 +91,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItemVenda);
 
+        jMenuItem4.setText("Meta");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItem4);
+
         jMenuItemGrupo.setText("Grupo");
         jMenuItemGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +116,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro.add(jMenuItemMarca);
         jMenuCadastro.add(jSeparator1);
 
+        jMenuItemMunicipio.setText("Municipio");
+        jMenuItemMunicipio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMunicipioActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMunicipio);
+
         jMenuItem1.setText("Bairro");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,13 +132,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenuCadastro.add(jMenuItem1);
 
-        jMenuItemMunicipio.setText("Municipio");
-        jMenuItemMunicipio.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("CEP");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemMunicipioActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenuCadastro.add(jMenuItemMunicipio);
+        jMenuCadastro.add(jMenuItem3);
+        jMenuCadastro.add(jSeparator2);
+
+        jMenuItem2.setText("Sair");
+        jMenuCadastro.add(jMenuItem2);
 
         jMenuBar1.add(jMenuCadastro);
 
@@ -194,6 +219,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        CadastroCep cadastro = new CadastroCep();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        CadastroMetas cadastro = new CadastroMetas();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,6 +276,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuEditar;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItemGrupo;
     private javax.swing.JMenuItem jMenuItemMarca;
     private javax.swing.JMenuItem jMenuItemMunicipio;
@@ -242,5 +286,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemProdutos;
     private javax.swing.JMenuItem jMenuItemVenda;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }

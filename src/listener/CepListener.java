@@ -1,13 +1,15 @@
 package listener;
 
+import dao.CepDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import model.Cep;
 import view.CadastroCep;
 
 public class CepListener implements ActionListener {
     
-    // Declarar DAO
+    private CepDao dao = new CepDao();
     private Cep cep;
     private final CadastroCep frame;
     
@@ -21,7 +23,22 @@ public class CepListener implements ActionListener {
         
         switch(actionCommand) {
             case "SALVAR":
-                // TODO
+                try {
+                    cep = frame.getCep();
+                    try {
+                        dao.insert(cep);
+                        JOptionPane.showMessageDialog(null, "CEP cadastrado com sucesso!");
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(null, err.getMessage());
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+                
+                break;
+            
+            case "CANCELAR":
+                frame.dispose();
         }
     }
     

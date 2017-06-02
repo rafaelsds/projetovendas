@@ -7,25 +7,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Bairro;
+import model.Cep;
 
-public class BairroDao {
-    public void insert(Bairro bairro) {
+public class CepDao {
+
+    public void insert(Cep cep) {
         Connection con = null;
         PreparedStatement pst = null;
-        
+
         try {
             con = ConnectionFactory.getConnection();
-            
-            String sql = "insert into bairro (ds_bairro) values (?)";
-            
+
+            String sql = "insert into cep (nr_cpf) values (?)";
+
             pst = con.prepareStatement(sql);
-            pst.setString(1, bairro.getNome());
-           
-            
+            pst.setString(1, cep.getCep());
+
             pst.execute();
             con.commit();
-            
+
         } catch (Exception e) {
             System.out.println("ERRO: " + e.getMessage());
 
@@ -54,13 +54,13 @@ public class BairroDao {
             }
         }
     }
-    
+
     public void delete(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "delete from bairro where id = ?";
+            String sql = "delete from cep where id = ?";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             pst.execute();
@@ -94,16 +94,16 @@ public class BairroDao {
             }
         }
     }
-    
-    public void update(int codigo, Bairro bairro) throws ClassNotFoundException, SQLException {
+
+    public void update(int codigo, Cep cep) throws ClassNotFoundException, SQLException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update bairro set ds_bairro = ? where id = ?";
+            String sql = "update cep set nr_cpf = ? where id = ?";
             pst = conn.prepareStatement(sql);
-            
-            pst.setString(1, bairro.getNome());
+
+            pst.setString(1, cep.getCep());
             pst.setInt(2, codigo);
 
             pst.execute();
@@ -136,28 +136,28 @@ public class BairroDao {
             }
         }
     }
-    
-    public List<Bairro> getAll() throws ClassNotFoundException {
-        List<Bairro> lista = new ArrayList<>();
+
+    public List<Cep> getAll() throws ClassNotFoundException {
+        List<Cep> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from bairro";
+            String sql = "select * from cep";
             pst = conn.prepareStatement(sql);
 
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                
+
                 Integer id = rs.getInt("id");
-                String ds_municipio = rs.getString("ds_bairro");
+                String nr_cep = rs.getString("nr_cpf");
 
-                Bairro bairro = new Bairro();
+                Cep cep = new Cep();
 
-                bairro.setId(id);
-                bairro.setNome(ds_municipio);
+                cep.setId(id);
+                cep.setCep(nr_cep);
 
-                lista.add(bairro);
+                lista.add(cep);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -179,29 +179,28 @@ public class BairroDao {
         }
         return lista;
     }
-    
-    public Bairro getBairro(int codigo) throws ClassNotFoundException {
+
+    public Cep getCep(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from bairro where cod = ?";
+            String sql = "select * from cep where cod = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                
+
                 Integer id = rs.getInt("id");
-                String ds_municipio = rs.getString("ds_bairro");
-                
-                Bairro bairro = new Bairro();
+                String nr_cep = rs.getString("nr_cpf");
 
-                bairro.setId(id);
-                bairro.setNome(ds_municipio);
-                
+                Cep cep = new Cep();
 
-                return bairro;
+                cep.setId(id);
+                cep.setCep(nr_cep);
+
+                return cep;
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -223,5 +222,4 @@ public class BairroDao {
         }
         return null;
     }
-    
 }

@@ -1,14 +1,30 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Meta {
     
     private Integer id;
     private String descricao;
     private Integer valor;
-    private Date data_inicio;
-    private Date data_final;
+    private Date dataInicio;
+    private Date dataFinal;
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
     
     public Integer getId() {
         return id;
@@ -32,22 +48,6 @@ public class Meta {
 
     public void setValor(Integer valor) {
         this.valor = valor;
-    }
-
-    public Date getData_inicio() {
-        return data_inicio;
-    }
-
-    public void setData_inicio(Date data_inicio) {
-        this.data_inicio = data_inicio;
-    }
-
-    public Date getData_final() {
-        return data_final;
-    }
-
-    public void setData_final(Date data_final) {
-        this.data_final = data_final;
     }
     
 }
