@@ -17,7 +17,7 @@ public class ComissaoDao {
         try {
             con = ConnectionFactory.getConnection();
             
-            String sql = "insert into comissao (vl_comissao,dt_inicio_vigencia,dt_fim_vigencia) values (?,?,?)";
+            String sql = "insert into comissao (vl_comissao,dt_inicio_vigencia,dt_final_vigencia) values (?,?,?)";
             
             pst = con.prepareStatement(sql);
             pst.setInt(1, comissao.getValor());
@@ -101,7 +101,7 @@ public class ComissaoDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update comissao set vl_comissao = ?,dt_inicio_vigencia = ?,dt_fim_vigencia = ? where id = ?";
+            String sql = "update comissao set vl_comissao = ?,dt_inicio_vigencia = ?,dt_final_vigencia = ? where id = ?";
             pst = conn.prepareStatement(sql);
             
             pst.setInt(1, comissao.getValor());
@@ -155,7 +155,7 @@ public class ComissaoDao {
                 Integer id = rs.getInt("id");
                 Integer valor = rs.getInt("vl_comissao");
                 java.sql.Date dataInicio = rs.getDate("dt_inicio_vigencia");
-                java.sql.Date dataFinal = rs.getDate("dt_fim_vigencia");
+                java.sql.Date dataFinal = rs.getDate("dt_final_vigencia");
 
                 Comissao comissao = new Comissao();
 
@@ -202,7 +202,7 @@ public class ComissaoDao {
                 Integer id = rs.getInt("id");
                 Integer valor = rs.getInt("vl_comissao");
                 java.sql.Date dataInicio = rs.getDate("dt_inicio_vigencia");
-                java.sql.Date dataFinal = rs.getDate("dt_fim_vigencia");
+                java.sql.Date dataFinal = rs.getDate("dt_final_vigencia");
 
 
                 Comissao comissao = new Comissao();
