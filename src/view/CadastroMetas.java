@@ -2,20 +2,32 @@
 
 import converter.DateConverter;
 import java.awt.Dimension;
-import java.sql.Date;
 import java.text.ParseException;
+import javax.swing.text.MaskFormatter;
 import listener.MetasListener;
 import model.Meta;
 
 public class CadastroMetas extends javax.swing.JInternalFrame {
     
-    MetasListener listener = new MetasListener();
+    MetasListener listener = new MetasListener(this);
     
     public CadastroMetas() {
         initComponents();
         jButtonSalvar.setActionCommand("SALVAR");
         jButtonCancelar.setActionCommand("CANCELAR");
         jButtonBuscar.setActionCommand("BUSCAR");
+        
+        MaskFormatter dataMaskInicio = new MaskFormatter();
+        MaskFormatter dataMaskFim = new MaskFormatter();
+        try {
+            dataMaskInicio.setMask("##/##/####");
+            dataMaskFim.setMask("##/##/####");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+     
+        dataMaskInicio.install(jFormattedTextFieldDataInicio);
+        dataMaskFim.install(jFormattedTextFieldDataFinal);
     }
 
     /**
@@ -83,16 +95,15 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3))
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 72, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextFieldDataInicio))
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jFormattedTextFieldDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -103,7 +114,7 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 246, Short.MAX_VALUE))
                             .addComponent(jTextFieldDescricao))))
                 .addGap(39, 39, 39))
         );
@@ -156,7 +167,7 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCancelar)))
                 .addContainerGap())
@@ -170,7 +181,7 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonCancelar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,7 +228,8 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
         Meta meta = new Meta();
         meta.setDescricao(jTextFieldDescricao.getText());
         meta.setValor(Integer.parseInt(jTextFieldValor.getText()));
-        
+        meta.setDataInicio(DateConverter.formatarData(jFormattedTextFieldDataInicio.getText(), "dd/MM/yyyy"));
+        meta.setDataFinal(DateConverter.formatarData(jFormattedTextFieldDataFinal.getText(), "dd/MM/yyyy"));
         
         return meta;
     }

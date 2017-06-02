@@ -2,37 +2,29 @@ package dao;
 
 import connection.ConnectionFactory;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import model.Cep;
-import model.Meta;
+import model.Uf;
 
-public class MetaDao {
-    public void insert(Meta meta) {
+public class UfDao {
+    public void insert(Uf uf) {
         Connection con = null;
         PreparedStatement pst = null;
-
+        
         try {
             con = ConnectionFactory.getConnection();
-
-            String sql = "insert into meta (ds_meta, vl_meta, dt_inicio_vigencia, dt_final_vigencia) values (?,?,?,?)";
             
-
+            String sql = "insert into uf (ds_uf) values (?)";
             
             pst = con.prepareStatement(sql);
-            pst.setString(1, meta.getDescricao());
-            pst.setInt(2, meta.getValor());
-            pst.setTimestamp(3, new Timestamp(meta.getDataFinal().getTime()));
-            pst.setTimestamp(4, new Timestamp(meta.getDataInicio().getTime()));
-
+            pst.setString(1, uf.getNome());
+            
             pst.execute();
             con.commit();
-
+            
         } catch (Exception e) {
             System.out.println("ERRO: " + e.getMessage());
 
@@ -61,13 +53,13 @@ public class MetaDao {
             }
         }
     }
-
+    
     public void delete(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "delete from meta where id = ?";
+            String sql = "delete from uf where id = ?";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             pst.execute();
@@ -101,21 +93,17 @@ public class MetaDao {
             }
         }
     }
-
-    public void update(int codigo, Meta meta) throws ClassNotFoundException, SQLException {
+    
+    public void update(int codigo, Uf uf) throws ClassNotFoundException, SQLException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update meta set ds_meta = ?, vl_meta = ?, dt_inicio_vigencia = ?, dt_final_vigencia = ?"
-                    + " where id = ?";
+            String sql = "update uf set ds_uf = ? where id = ?";
             pst = conn.prepareStatement(sql);
-
-            pst.setString(1, meta.getDescricao());
-            pst.setInt(2, meta.getValor());
-            pst.setDate(3, (java.sql.Date) meta.getDataInicio());
-            pst.setDate(4, (java.sql.Date) meta.getDataFinal());
-            pst.setInt(5, codigo);
+            
+            pst.setString(1, uf.getNome());
+            pst.setInt(2, codigo);
 
             pst.execute();
             conn.commit();
@@ -147,34 +135,28 @@ public class MetaDao {
             }
         }
     }
-
-    public List<Meta> getAll() throws ClassNotFoundException {
-        List<Meta> lista = new ArrayList<>();
+    
+    public List<Uf> getAll() throws ClassNotFoundException {
+        List<Uf> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from meta";
+            String sql = "select * from uf";
             pst = conn.prepareStatement(sql);
 
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-
+                
                 Integer id = rs.getInt("id");
-                String ds_meta = rs.getString("ds_meta");
-                Integer vl_meta = rs.getInt("vl_meta");
-                Date data_inicio = rs.getDate("dt_inicio_vigencia");
-                Date data_final = rs.getDate("dt_final_vigencia");
+                String ds_uf = rs.getString("ds_uf");
+                
+                Uf uf = new Uf();
 
-                Meta meta = new Meta();
+                uf.setId(id);
+                uf.setNome(ds_uf);
 
-                meta.setId(id);
-                meta.setDescricao(ds_meta);
-                meta.setValor(vl_meta);
-                meta.setDataInicio(data_inicio);
-                meta.setDataFinal(data_final);
-
-                lista.add(meta);
+                lista.add(uf);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -196,28 +178,28 @@ public class MetaDao {
         }
         return lista;
     }
-
-    public Cep getCep(int codigo) throws ClassNotFoundException {
+    
+    public Uf getUf(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from cep where cod = ?";
+            String sql = "select * from uf where cod = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-
+                
                 Integer id = rs.getInt("id");
-                String nr_cep = rs.getString("nr_cpf");
+                String ds_uf = rs.getString("ds_uf");
+                
+                Uf uf = new Uf();
 
-                Cep cep = new Cep();
-
-                cep.setId(id);
-                cep.setCep(nr_cep);
-
-                return cep;
+                uf.setId(id);
+                uf.setNome(ds_uf);
+                
+                return uf;
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());

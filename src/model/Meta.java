@@ -9,6 +9,7 @@ public class Meta {
     private Integer valor;
     private Date dataInicio;
     private Date dataFinal;
+    
 
     public Date getDataInicio() {
         return dataInicio;
