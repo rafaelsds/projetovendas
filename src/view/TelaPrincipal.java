@@ -40,9 +40,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItemVenda = new javax.swing.JMenuItem();
         jMenuItemGrupo = new javax.swing.JMenuItem();
         jMenuItemMarca = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemMunicipio = new javax.swing.JMenuItem();
         jMenuEditar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jDesktopPanelPrincipal.setBackground(new java.awt.Color(51, 135, 245));
 
         javax.swing.GroupLayout jDesktopPanelPrincipalLayout = new javax.swing.GroupLayout(jDesktopPanelPrincipal);
         jDesktopPanelPrincipal.setLayout(jDesktopPanelPrincipalLayout);
@@ -90,7 +95,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro.add(jMenuItemGrupo);
 
         jMenuItemMarca.setText("Marca");
+        jMenuItemMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMarcaActionPerformed(evt);
+            }
+        });
         jMenuCadastro.add(jMenuItemMarca);
+        jMenuCadastro.add(jSeparator1);
+
+        jMenuItem1.setText("Bairro");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItem1);
+
+        jMenuItemMunicipio.setText("Municipio");
+        jMenuItemMunicipio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMunicipioActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMunicipio);
 
         jMenuBar1.add(jMenuCadastro);
 
@@ -137,7 +164,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrupoActionPerformed
         // TODO add your handling code here:
+        CadastroGrupo cadastro = new CadastroGrupo();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItemGrupoActionPerformed
+
+    private void jMenuItemMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcaActionPerformed
+        // TODO add your handling code here:
+        CadastroMarca cadastro = new CadastroMarca();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMarcaActionPerformed
+
+    private void jMenuItemMunicipioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMunicipioActionPerformed
+        // TODO add your handling code here:
+        CadastroMunicipio cadastro = new CadastroMunicipio();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMunicipioActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        CadastroBairro cadastro = new CadastroBairro();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,10 +234,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuEditar;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemGrupo;
     private javax.swing.JMenuItem jMenuItemMarca;
+    private javax.swing.JMenuItem jMenuItemMunicipio;
     private javax.swing.JMenuItem jMenuItemPessoa;
     private javax.swing.JMenuItem jMenuItemProdutos;
     private javax.swing.JMenuItem jMenuItemVenda;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

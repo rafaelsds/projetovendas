@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection con = null;
         
         try {
-            Class.forName("driver oracle");
-            con = DriverManager.getConnection("nome do banco", "user", "password");
+            Class.forName("org.hsqldb.jdbcDriver");
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/db/vendas", "sa", "");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Erro: " + e.getMessage());
         }
