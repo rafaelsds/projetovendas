@@ -50,6 +50,11 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         jLabel1.setText("Código");
 
         jTextField1.setEditable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButtonBuscar.setText("...");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +139,10 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         listener.actionPerformed(evt);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
