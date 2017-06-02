@@ -1,7 +1,6 @@
 package listener;
 
 import dao.MetaDao;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -14,6 +13,10 @@ public class MetasListener implements ActionListener {
     private MetaDao dao = new MetaDao();
     private Meta meta;
     private CadastroMetas frame;
+    
+    public MetasListener(CadastroMetas frame) {
+        this.frame = frame;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -29,7 +32,7 @@ public class MetasListener implements ActionListener {
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
-                } catch (ParseException | HeadlessException ex) {
+                } catch (ParseException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
                 
