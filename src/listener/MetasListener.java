@@ -10,7 +10,7 @@ import view.CadastroMetas;
 
 public class MetasListener implements ActionListener {
     
-    private MetaDao dao = new MetaDao();
+    private final MetaDao dao = new MetaDao();
     private Meta meta;
     private CadastroMetas frame;
     

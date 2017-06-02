@@ -21,13 +21,14 @@ public class MetaDao {
             con = ConnectionFactory.getConnection();
 
             String sql = "insert into meta (ds_meta, vl_meta, dt_inicio_vigencia, dt_final_vigencia) values (?,?,?,?)";
+            
 
             
             pst = con.prepareStatement(sql);
             pst.setString(1, meta.getDescricao());
             pst.setInt(2, meta.getValor());
-            pst.setDate(3, (java.sql.Date) meta.getDataInicio());
-            pst.setDate(4, (java.sql.Date) meta.getDataFinal());
+            pst.setTimestamp(3, new Timestamp(meta.getDataFinal().getTime()));
+            pst.setTimestamp(4, new Timestamp(meta.getDataInicio().getTime()));
 
             pst.execute();
             con.commit();
@@ -112,8 +113,8 @@ public class MetaDao {
 
             pst.setString(1, meta.getDescricao());
             pst.setInt(2, meta.getValor());
-            pst.setTimestamp(3, new Timestamp(meta.getDataInicio().getTime()));
-            pst.setTimestamp(4, new Timestamp(meta.getDataFinal().getTime()));
+            pst.setDate(3, (java.sql.Date) meta.getDataInicio());
+            pst.setDate(4, (java.sql.Date) meta.getDataFinal());
             pst.setInt(5, codigo);
 
             pst.execute();
