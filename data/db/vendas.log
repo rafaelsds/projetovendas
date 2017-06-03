@@ -1,4 +1,4 @@
-/*C3*/SET SCHEMA PUBLIC
+/*C2*/SET SCHEMA PUBLIC
 CONNECT USER SA
 drop table uf if exists cascade
 \u000adrop table bairro if exists cascade
