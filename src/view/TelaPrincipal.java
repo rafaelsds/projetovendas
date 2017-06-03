@@ -32,6 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem6 = new javax.swing.JMenuItem();
         jDesktopPanelPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
@@ -42,13 +43,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItemGrupo = new javax.swing.JMenuItem();
         jMenuItemMarca = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemMunicipio1 = new javax.swing.JMenuItem();
         jMenuItemMunicipio = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuEditar = new javax.swing.JMenu();
+
+        jMenuItem6.setText("jMenuItem6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Vendas");
@@ -123,7 +128,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuCadastro.add(jMenuItemMarca);
+
+        jMenuItem7.setText("Transportador");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItem7);
         jMenuCadastro.add(jSeparator1);
+
+        jMenuItemMunicipio1.setText("UF");
+        jMenuItemMunicipio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMunicipio1ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemMunicipio1);
 
         jMenuItemMunicipio.setText("Municipio");
         jMenuItemMunicipio.addActionListener(new java.awt.event.ActionListener() {
@@ -252,6 +273,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItemMunicipio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMunicipio1ActionPerformed
+        CadastroUf cadastro = new CadastroUf();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMunicipio1ActionPerformed
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        CadastroTransportador cadastro = new CadastroTransportador();
+        jDesktopPanelPrincipal.add(cadastro);
+        cadastro.setPosicao();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,9 +332,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItemGrupo;
     private javax.swing.JMenuItem jMenuItemMarca;
     private javax.swing.JMenuItem jMenuItemMunicipio;
+    private javax.swing.JMenuItem jMenuItemMunicipio1;
     private javax.swing.JMenuItem jMenuItemPessoa;
     private javax.swing.JMenuItem jMenuItemProdutos;
     private javax.swing.JMenuItem jMenuItemVenda;

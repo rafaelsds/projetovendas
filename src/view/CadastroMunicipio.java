@@ -17,9 +17,6 @@ public class CadastroMunicipio extends javax.swing.JInternalFrame {
     
     MunicipioListener listener = new MunicipioListener(this);
 
-    /**
-     * Creates new form cidade
-     */
     public CadastroMunicipio() {
         initComponents();
         jButtonSalvar.setActionCommand("SALVAR");

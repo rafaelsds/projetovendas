@@ -12,6 +12,7 @@ import model.Comissao;
 import view.CadastroComissao;
 
 public class ComissaoListener implements ActionListener {
+    
     private final ComissaoDao dao = new ComissaoDao();
     private Comissao comissao;
     private CadastroComissao frame;
@@ -28,7 +29,7 @@ public class ComissaoListener implements ActionListener {
                     comissao = frame.getComissao();
                     try {
                         dao.insert(comissao);
-                        JOptionPane.showMessageDialog(null, "Comissao cadastrada com sucesso!");
+                        JOptionPane.showMessageDialog(null, "Comissão cadastrada com sucesso!");
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
