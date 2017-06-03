@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import model.Comissao;
@@ -21,8 +22,8 @@ public class ComissaoDao {
             
             pst = con.prepareStatement(sql);
             pst.setInt(1, comissao.getValor());
-            pst.setDate(2,(java.sql.Date) comissao.getDataInicio());
-            pst.setDate(3,(java.sql.Date) comissao.getDataFinal());
+            pst.setTimestamp(2, new Timestamp(comissao.getDataInicio().getTime()));
+            pst.setTimestamp(3, new Timestamp(comissao.getDataFinal().getTime()));
             
             pst.execute();
             con.commit();

@@ -5,8 +5,11 @@
  */
 package view;
 
+import converter.DateConverter;
 import java.awt.Dimension;
 import java.text.ParseException;
+import java.util.Date;
+import javax.swing.text.MaskFormatter;
 import listener.ComissaoListener;
 import model.Comissao;
 
@@ -19,6 +22,18 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
         jButtonSalvar.setActionCommand("SALVAR");
         jButtonCancelar.setActionCommand("CANCELAR");
         jButtonBuscar.setActionCommand("BUSCAR");
+        
+        MaskFormatter dataMaskInicio = new MaskFormatter();
+        MaskFormatter dataMaskFim = new MaskFormatter();
+        try {
+            dataMaskInicio.setMask("##/##/####");
+            dataMaskFim.setMask("##/##/####");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+     
+        dataMaskInicio.install(jFormattedTextFieldDataInicio);
+        dataMaskFim.install(jFormattedTextFieldDataFinal);
     }
 
     /**
@@ -38,9 +53,9 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
         jButtonSalvar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextDataInicio = new javax.swing.JTextField();
-        jTextDataFim = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jFormattedTextFieldDataInicio = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldDataFinal = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setTitle("Cadastro de Comissao");
@@ -80,18 +95,6 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Data Inicio ");
 
-        jTextDataInicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextDataInicioActionPerformed(evt);
-            }
-        });
-
-        jTextDataFim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextDataFimActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Data Fim");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,13 +107,17 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCancelar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 219, Short.MAX_VALUE)
+                                .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonCancelar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -125,9 +132,8 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(30, 30, 30)
-                                .addComponent(jTextDataFim)
-                                .addGap(102, 102, 102)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jFormattedTextFieldDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 149, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,12 +151,12 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFieldDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButtonSalvar))
@@ -179,25 +185,17 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextValorActionPerformed
 
-    private void jTextDataInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDataInicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextDataInicioActionPerformed
-
-    private void jTextDataFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDataFimActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextDataFimActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JFormattedTextField jFormattedTextFieldDataFinal;
+    private javax.swing.JFormattedTextField jFormattedTextFieldDataInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextDataFim;
-    private javax.swing.JTextField jTextDataInicio;
     private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextValor;
     // End of variables declaration//GEN-END:variables
@@ -205,6 +203,8 @@ public class CadastroComissao extends javax.swing.JInternalFrame {
     public Comissao getComissao() throws ParseException {
         Comissao comissao = new Comissao();
         comissao.setValor(Integer.parseInt(jTextValor.getText()));
+        comissao.setDataInicio(DateConverter.formatarData(jFormattedTextFieldDataInicio.getText(), "dd/MM/yyyy"));
+        comissao.setDataFinal(DateConverter.formatarData(jFormattedTextFieldDataFinal.getText(), "dd/MM/yyyy"));
         
         return comissao;
     }
