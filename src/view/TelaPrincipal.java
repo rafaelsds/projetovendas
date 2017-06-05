@@ -34,6 +34,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem6 = new javax.swing.JMenuItem();
         jDesktopPanelPrincipal = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemProdutos = new javax.swing.JMenuItem();
@@ -60,15 +61,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jDesktopPanelPrincipal.setBackground(new java.awt.Color(51, 135, 245));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fundo.jpg"))); // NOI18N
+
+        jDesktopPanelPrincipal.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPanelPrincipalLayout = new javax.swing.GroupLayout(jDesktopPanelPrincipal);
         jDesktopPanelPrincipal.setLayout(jDesktopPanelPrincipalLayout);
         jDesktopPanelPrincipalLayout.setHorizontalGroup(
             jDesktopPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 746, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 746, Short.MAX_VALUE)
         );
         jDesktopPanelPrincipalLayout.setVerticalGroup(
             jDesktopPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 435, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, Short.MAX_VALUE)
         );
 
         jMenuCadastro.setText("Novo");
@@ -324,6 +329,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPanelPrincipal;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuEditar;
