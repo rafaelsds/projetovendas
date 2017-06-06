@@ -191,6 +191,17 @@ public class CadastroCep extends javax.swing.JInternalFrame {
         jTextFieldCep.setText(descricao);
     }
     
+    public boolean verificaExistencia() {
+        return !jTextFieldCodigo.getText().isEmpty();
+    }
+    
+    public Integer retornaCodigo() {
+        Integer id = Integer.parseInt(jTextFieldCodigo.getText());
+        
+        return id;
+    }
+    
+    
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);

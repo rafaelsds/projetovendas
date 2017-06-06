@@ -152,13 +152,13 @@ public class TransportadorDao {
                 
                 Integer id = rs.getInt("id");
                 String ds_nome = rs.getString("ds_transportador");
-                String ds_plano = rs.getString("ds_plano");
+                String ds_placa = rs.getString("ds_placa");
 
                 Transportador transportador = new Transportador();
 
                 transportador.setId(id);
                 transportador.setNome(ds_nome);
-                transportador.setPlaca(ds_plano);
+                transportador.setPlaca(ds_placa);
 
                 lista.add(transportador);
             }
@@ -188,22 +188,23 @@ public class TransportadorDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from municipio where id = ?";
+            String sql = "select * from transportador where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             ResultSet rs = pst.executeQuery();
+            
             if (rs.next()) {
                 
                 Integer id = rs.getInt("id");
                 String ds_transportador = rs.getString("ds_transportador");
-                String ds_plano = rs.getString("ds_plano");
+                String ds_placa = rs.getString("ds_placa");
                 
                 Transportador transportador = new Transportador();
 
                 transportador.setId(id);
                 transportador.setNome(ds_transportador);
-                transportador.setPlaca(ds_plano);
+                transportador.setPlaca(ds_placa);
                 
 
                 return transportador;

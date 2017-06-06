@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
-/**
- *
- * @author leonardo
- */
-public class ListagemTransportador extends javax.swing.JInternalFrame {
+import dao.TransportadorDao;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Transportador;
 
-    /**
-     * Creates new form ListagemTransportador
-     */
+public class ListagemTransportador extends javax.swing.JInternalFrame {
+    
+    CadastroTransportador cadastroTransportador;
+    
     public ListagemTransportador(CadastroTransportador cadastro) {
+        this.cadastroTransportador = cadastro;
         initComponents();
+        criaTabela();
     }
 
     /**
@@ -27,73 +25,136 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jButtonSelecionar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableTransportadores = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Lista de Transportadores");
 
-        jButton1.setText("Selecionar");
+        jButtonSelecionar.setText("Selecionar");
+        jButtonSelecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelecionarActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTransportadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "NOME", "PLACA"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTableTransportadores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE))
+                        .addGap(0, 341, Short.MAX_VALUE)
+                        .addComponent(jButtonSelecionar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jButtonSelecionar)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
+        // TODO add your handling code here:
+        try {
+            cadastroTransportador.preencheTransportador(getLinha());
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+        this.dispose();
+    }//GEN-LAST:event_jButtonSelecionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonSelecionar;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableTransportadores;
     // End of variables declaration//GEN-END:variables
+
+     private void criaTabela() {
+        
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            };
+        };
+        
+        TransportadorDao dao = new TransportadorDao();
+        
+        jTableTransportadores.setModel(modelo);
+        
+        modelo.addColumn("ID");
+        modelo.addColumn("NOME");
+        modelo.addColumn("PLACA");
+        
+        
+        jTableTransportadores.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableTransportadores.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTableTransportadores.getColumnModel().getColumn(2).setPreferredWidth(200);
+        
+        try {
+            for (Transportador t : dao.getAll()) {
+                modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getPlaca()});
+            }
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+     
+     public Transportador getLinha() throws ClassNotFoundException {
+       
+        int selecionada = jTableTransportadores.getSelectedRow();
+        
+        Transportador t = new Transportador();
+        TransportadorDao dao = new TransportadorDao();
+
+        if (selecionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um transportador!");
+        }
+
+        Object obj = jTableTransportadores.getValueAt(selecionada, 0);
+        int codigo = (int) obj;
+
+        t = dao.getTransportador(codigo);
+
+        return t;
+
+    }
+    
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }
+
 }
