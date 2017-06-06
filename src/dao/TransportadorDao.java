@@ -1,4 +1,3 @@
-
 package dao;
 
 import connection.ConnectionFactory;
@@ -18,7 +17,7 @@ public class TransportadorDao {
         try {
             con = ConnectionFactory.getConnection();
             
-            String sql = "insert into transportador (ds_transportador, ds_plano ) values (?, ?)";
+            String sql = "insert into transportador (ds_transportador, ds_placa) values (?, ?)";
             
             pst = con.prepareStatement(sql);
             pst.setString(1, transportador.getNome());

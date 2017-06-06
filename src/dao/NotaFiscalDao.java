@@ -7,25 +7,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Bairro;
+import model.NotaFiscal;
 
-public class BairroDao {
-    public void insert(Bairro bairro) {
+public class NotaFiscalDao {
+
+    public void insert(NotaFiscal notaFiscal) {
         Connection con = null;
         PreparedStatement pst = null;
-        
+
         try {
             con = ConnectionFactory.getConnection();
-            
-            String sql = "insert into bairro (ds_bairro) values (?)";
-            
+
+            String sql = "insert into nota_fiscal (id_venda, nr_cfop, id_transportador) values (?, ?, ?)";
+
             pst = con.prepareStatement(sql);
-            pst.setString(1, bairro.getNome());
-           
-            
+            pst.setInt(1, notaFiscal.getIdVenda());
+            pst.setString(2, notaFiscal.getCfop());
+            pst.setInt(3, notaFiscal.getIdTransportador());
+
             pst.execute();
             con.commit();
-            
+
         } catch (Exception e) {
             System.out.println("ERRO: " + e.getMessage());
 
@@ -54,13 +56,13 @@ public class BairroDao {
             }
         }
     }
-    
+
     public void delete(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "delete from bairro where id = ?";
+            String sql = "delete from nota_fiscal where id = ?";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             pst.execute();
@@ -94,17 +96,19 @@ public class BairroDao {
             }
         }
     }
-    
-    public void update(int codigo, Bairro bairro) throws ClassNotFoundException, SQLException {
+
+    public void update(int codigo, NotaFiscal notaFiscal) throws ClassNotFoundException, SQLException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update bairro set ds_bairro = ? where id = ?";
+            String sql = "update nota_fiscal set id_venda = ?, nr_cfop = ?, id_transportador = ? where id = ?";
             pst = conn.prepareStatement(sql);
-            
-            pst.setString(1, bairro.getNome());
-            pst.setInt(2, codigo);
+
+            pst.setInt(1, notaFiscal.getIdVenda());
+            pst.setString(2, notaFiscal.getCfop());
+            pst.setInt(3, notaFiscal.getIdTransportador());
+            pst.setInt(4, codigo);
 
             pst.execute();
             conn.commit();
@@ -136,28 +140,32 @@ public class BairroDao {
             }
         }
     }
-    
-    public List<Bairro> getAll() throws ClassNotFoundException {
-        List<Bairro> lista = new ArrayList<>();
+
+    public List<NotaFiscal> getAll() throws ClassNotFoundException {
+        List<NotaFiscal> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from bairro";
+            String sql = "select * from nota_fiscal";
             pst = conn.prepareStatement(sql);
 
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                
+
                 Integer id = rs.getInt("id");
-                String ds_municipio = rs.getString("ds_bairro");
+                Integer id_venda = rs.getInt("id_venda");
+                String nr_cfop = rs.getString("nr_cfop");
+                Integer id_trans = rs.getInt("id_transportador");
+                
+                NotaFiscal notaFiscal = new NotaFiscal();
+                
+                notaFiscal.setIdTransportador(id_trans);
+                notaFiscal.setIdVenda(id_venda);
+                notaFiscal.setId(id);
+                notaFiscal.setCfop(nr_cfop);
 
-                Bairro bairro = new Bairro();
-
-                bairro.setId(id);
-                bairro.setNome(ds_municipio);
-
-                lista.add(bairro);
+                lista.add(notaFiscal);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -179,29 +187,32 @@ public class BairroDao {
         }
         return lista;
     }
-    
-    public Bairro getBairro(int codigo) throws ClassNotFoundException {
+
+    public NotaFiscal getNotaFiscal(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from bairro where id = ?";
+            String sql = "select * from nota_fiscal where cod = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                
+
                 Integer id = rs.getInt("id");
-                String ds_municipio = rs.getString("ds_bairro");
+                Integer id_venda = rs.getInt("id_venda");
+                String nr_cfop = rs.getString("nr_cfop");
+                Integer id_trans = rs.getInt("id_transportador");
                 
-                Bairro bairro = new Bairro();
-
-                bairro.setId(id);
-                bairro.setNome(ds_municipio);
+                NotaFiscal notaFiscal = new NotaFiscal();
                 
+                notaFiscal.setId(id);
+                notaFiscal.setIdTransportador(id_trans);
+                notaFiscal.setIdVenda(id_venda);
+                notaFiscal.setCfop(nr_cfop);
 
-                return bairro;
+                return notaFiscal;
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -223,5 +234,5 @@ public class BairroDao {
         }
         return null;
     }
-    
+
 }

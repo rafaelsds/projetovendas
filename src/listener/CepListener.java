@@ -9,7 +9,7 @@ import view.CadastroCep;
 
 public class CepListener implements ActionListener {
     
-    private CepDao dao = new CepDao();
+    private final CepDao dao = new CepDao();
     private Cep cep;
     private final CadastroCep frame;
     
