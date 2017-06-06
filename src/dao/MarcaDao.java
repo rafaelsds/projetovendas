@@ -18,7 +18,7 @@ public class MarcaDao {
         try {
             con = ConnectionFactory.getConnection();
             
-            String sql = "insert into marca (ds_marca) values (?)";
+            String sql = "insert into marca(ds_marca) values(?)";
             
             pst = con.prepareStatement(sql);
             pst.setString(1, marca.getNome());
