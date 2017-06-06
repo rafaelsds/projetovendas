@@ -185,7 +185,7 @@ public class CepDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from cep where cod = ?";
+            String sql = "select * from cep where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);

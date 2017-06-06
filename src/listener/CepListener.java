@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Cep;
 import view.CadastroCep;
+import view.ListagemCep;
 
 public class CepListener implements ActionListener {
     
@@ -39,6 +40,14 @@ public class CepListener implements ActionListener {
             
             case "CANCELAR":
                 frame.dispose();
+                break;
+            
+            case "BUSCAR":
+                ListagemCep listaCep = new ListagemCep(frame);
+                frame.getDesktopPane().add(listaCep);
+                listaCep.setPosicao();
+                listaCep.setVisible(true);
+                break;
         }
     }
     
