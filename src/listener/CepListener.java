@@ -27,8 +27,13 @@ public class CepListener implements ActionListener {
                 try {
                     cep = frame.getCep();
                     try {
-                        dao.insert(cep);
-                        JOptionPane.showMessageDialog(null, "CEP cadastrado com sucesso!");
+                        if (frame.verificaExistencia()) {
+                            dao.update(frame.retornaCodigo(), cep);
+                            JOptionPane.showMessageDialog(null, "CEP atualizado com sucesso!");
+                        } else {
+                            dao.insert(cep);
+                            JOptionPane.showMessageDialog(null, "CEP cadastrado com sucesso!");
+                        }
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
