@@ -1,8 +1,9 @@
 package listener;
 
-import dao.MarcaDao;
+import dao.PessoaDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Pessoa;
 import view.CadastroPessoa;
@@ -10,7 +11,7 @@ import view.ListagemPessoa;
 
 public class PessoaListener implements ActionListener {
     
-    private final MarcaDao dao = new MarcaDao();
+    private final PessoaDao dao = new PessoaDao();
     private Pessoa pessoa;
     private final CadastroPessoa frame;
     
@@ -24,20 +25,22 @@ public class PessoaListener implements ActionListener {
         
         switch(actionCommand) {
             case "SALVAR":
+                 
                 try {
-
+                    
                     pessoa = frame.getPessoa();
-
+                    
                     try {
-                        if (frame.verificaExistencia()) {
-                            //dao.update(frame.retornaCodigo(), pessoa);
+                        
+                        if (!frame.verificaExistencia()){
+                            dao.update(pessoa);
                             JOptionPane.showMessageDialog(null, "Pessoa atualizada com sucesso!");
                         } else {
-                            //dao.insert(pessoa);
+                            dao.insert(pessoa);
                             JOptionPane.showMessageDialog(null, "Pessoa cadastrada com sucesso!");
                         }
-                        
-                    } catch (Exception err) {
+                    
+                    } catch (SQLException err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
                 } catch (Exception ex) {
@@ -46,10 +49,10 @@ public class PessoaListener implements ActionListener {
                 break;
                 
             case "BUSCAR":
-                ListagemPessoa listaPesosa = new ListagemPessoa(frame);
-                frame.getDesktopPane().add(listaPesosa);
-                listaPesosa.setPosicao();
-                listaPesosa.setVisible(true);
+                ListagemPessoa listaPessoa = new ListagemPessoa(frame);
+                frame.getDesktopPane().add(listaPessoa);
+                listaPessoa.setPosicao();
+                listaPessoa.setVisible(true);
                 break;
             
             case "CANCELAR":

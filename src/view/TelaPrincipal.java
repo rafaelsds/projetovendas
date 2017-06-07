@@ -240,6 +240,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastroPessoa pessoa = new CadastroPessoa();
         jDesktopPanelPrincipal.add(pessoa);
+        pessoa.setPosicao();
         pessoa.setVisible(true);
     }//GEN-LAST:event_jMenuItemPessoaActionPerformed
 

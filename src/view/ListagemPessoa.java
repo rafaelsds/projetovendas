@@ -1,9 +1,10 @@
 package view;
 
-import dao.TransportadorDao;
+import dao.PessoaDao;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Pessoa;
 import model.Transportador;
 
 public class ListagemPessoa extends javax.swing.JInternalFrame {
@@ -15,7 +16,28 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
         initComponents();
         criaTabela();
     }
+    
+    
+    public Pessoa getLinha() throws ClassNotFoundException {
+       
+        int selecionada = jTable.getSelectedRow();
+        
+        Pessoa pessoa = new Pessoa();
+        PessoaDao dao = new PessoaDao();
 
+        if (selecionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um registro!");
+        }
+
+        Object obj = jTable.getValueAt(selecionada, 0);
+        int codigo = (int) obj;
+
+        pessoa = dao.getPessoa(codigo);
+
+        return pessoa;
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +49,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
 
         jButtonSelecionar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableTransportadores = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Lista de Transportadores");
@@ -39,7 +61,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
             }
         });
 
-        jTableTransportadores.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -55,7 +77,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTableTransportadores);
+        jScrollPane2.setViewportView(jTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,13 +107,13 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
         // TODO add your handling code here:
-        /*
+        
         try {
-            cadastroPessoa.preencheTransportador(getLinha());
+            cadastroPessoa.preenchePessoa(getLinha());
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        */
+        
         this.dispose();
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
@@ -99,7 +121,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSelecionar;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableTransportadores;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 
     private void criaTabela() {
@@ -111,48 +133,28 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
             };
         };
         
-        TransportadorDao dao = new TransportadorDao();
+        PessoaDao dao = new PessoaDao();
         
-        jTableTransportadores.setModel(modelo);
+        jTable.setModel(modelo);
         
         modelo.addColumn("ID");
         modelo.addColumn("NOME");
         modelo.addColumn("ENDEREÇO");
         
         
-        jTableTransportadores.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableTransportadores.getColumnModel().getColumn(1).setPreferredWidth(200);
-        jTableTransportadores.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
         
         try {
-            for (Transportador t : dao.getAll()) {
-                modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getPlaca()});
+            for (Pessoa t : dao.getAll()) {
+                modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getEndereco()});
             }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Transportador getLinha() throws ClassNotFoundException {
-       
-        int selecionada = jTableTransportadores.getSelectedRow();
-        
-        Transportador t = new Transportador();
-        TransportadorDao dao = new TransportadorDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um transportador!");
-        }
-
-        Object obj = jTableTransportadores.getValueAt(selecionada, 0);
-        int codigo = (int) obj;
-
-        t = dao.getTransportador(codigo);
-
-        return t;
-
-    }
-    
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);

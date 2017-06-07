@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import listener.PessoaListener;
 import model.Pessoa;
 
@@ -9,22 +10,47 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
     
     public CadastroPessoa() {
         initComponents();
+        jButtonSalvar.setActionCommand("SALVAR");
+        jButtonCancelar.setActionCommand("CANCELAR");
+        jButtonBuscarPessoa.setActionCommand("BUSCAR");
     }
     
     public Pessoa getPessoa() {
         
         Pessoa pessoa = new Pessoa();
-        pessoa.setEndereco(jTxtEndereco.getText());
+        
+        if(!jTxtId.getText().isEmpty())
+            pessoa.setId(Integer.parseInt(jTxtId.getText()));
+        
+        if(!jTxtEndereco.getText().isEmpty())
+            pessoa.setEndereco(jTxtEndereco.getText());
+        
+        if(!jTxtNome.getText().isEmpty())
+            pessoa.setNome(jTxtNome.getText());
+        
+        if(!jTxtEmail.getText().isEmpty())
+            pessoa.setEmail(jTxtEmail.getText());
+        
+        if(!jTxtNumero.getText().isEmpty())
+            pessoa.setNumeroEndereco(jTxtNumero.getText());
+        
+        if(!jTxtTelefone.getText().isEmpty())
+            pessoa.setTelefone(jTxtTelefone.getText());
+        
+        if(!jTxtBairro.getText().isEmpty())
+            pessoa.setIdBairro(Integer.parseInt(jTxtBairro.getText()));
+       
+        if(!jTxtCep.getText().isEmpty())
+            pessoa.setIdCep(Integer.parseInt(jTxtCep.getText()));
         
         return pessoa;
     }
     
     public boolean verificaExistencia() {
-        return !jTxtId.getText().isEmpty();
+        return jTxtId.getText().isEmpty();
     }
     
     public void preenchePessoa(Pessoa pessoa) {
-       
         jTxtId.setText(String.valueOf(pessoa.getId()));
         jTxtBairro.setText(String.valueOf(pessoa.getIdBairro()));
         jTxtCep.setText(String.valueOf(pessoa.getIdCep()));
@@ -33,6 +59,11 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         jTxtNome.setText(pessoa.getNome());
         jTxtNumero.setText(pessoa.getNumeroEndereco());
         jTxtTelefone.setText(pessoa.getTelefone());
+    }
+    
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
     }
     
     /**
@@ -54,7 +85,7 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         jTxtNome = new javax.swing.JTextField();
         jTxtEndereco = new javax.swing.JTextField();
         jTxtId = new javax.swing.JTextField();
-        jButtonBuscaPessoa = new javax.swing.JButton();
+        jButtonBuscarPessoa = new javax.swing.JButton();
         jTxtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTxtNumero = new javax.swing.JTextField();
@@ -69,6 +100,7 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         jTxtCep = new javax.swing.JTextField();
         jButtonBuscaCep = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Cadastro de Pessoa");
@@ -99,10 +131,10 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
 
         jTxtId.setEditable(false);
 
-        jButtonBuscaPessoa.setText("...");
-        jButtonBuscaPessoa.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBuscarPessoa.setText("...");
+        jButtonBuscarPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscaPessoaActionPerformed(evt);
+                jButtonBuscarPessoaActionPerformed(evt);
             }
         });
 
@@ -176,20 +208,21 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
-                        .addGap(37, 37, 37)
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonBuscaCep, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 101, Short.MAX_VALUE))
-                            .addComponent(jCbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jCbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTxtBairro)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(10, 10, 10)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -202,10 +235,10 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(31, 31, 31)
+                                .addGap(18, 18, 18)
                                 .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonBuscaPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonBuscarPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(39, 39, 39))
         );
@@ -216,7 +249,7 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBuscaPessoa))
+                    .addComponent(jButtonBuscarPessoa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -251,7 +284,7 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonBuscaCep))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTxtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,6 +296,13 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         );
 
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
+
+        jButtonCancelar.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,7 +311,10 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -281,7 +324,9 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonSalvar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSalvar)
+                    .addComponent(jButtonCancelar))
                 .addContainerGap())
         );
 
@@ -316,15 +361,20 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
-    private void jButtonBuscaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscaPessoaActionPerformed
+    private void jButtonBuscarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPessoaActionPerformed
         listener.actionPerformed(evt);
-    }//GEN-LAST:event_jButtonBuscaPessoaActionPerformed
+    }//GEN-LAST:event_jButtonBuscarPessoaActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        listener.actionPerformed(evt);
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscaCep;
-    private javax.swing.JButton jButtonBuscaPessoa;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonBuscarPessoa;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox<String> jCbCidade;
     private javax.swing.JComboBox<String> jCbUf;

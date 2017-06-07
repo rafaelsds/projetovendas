@@ -26,7 +26,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButtonSalvar" min="-2" pref="109" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jButtonCancelar" min="-2" pref="109" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonSalvar" min="-2" pref="109" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -39,7 +43,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButtonSalvar" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButtonSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -84,23 +91,25 @@
                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jTxtCep" min="-2" pref="113" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButtonBuscaCep" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="101" max="32767" attributes="0"/>
+                                  <EmptySpace pref="121" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jCbCidade" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jCbCidade" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jTxtBairro" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jButtonBuscar" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
@@ -116,10 +125,10 @@
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jTxtId" min="-2" pref="81" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButtonBuscaPessoa" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="jButtonBuscarPessoa" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -136,7 +145,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTxtId" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonBuscaPessoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonBuscarPessoa" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -181,7 +190,7 @@
                               <Component id="jTxtCep" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButtonBuscaCep" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="10" max="32767" attributes="0"/>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -241,12 +250,12 @@
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonBuscaPessoa">
+        <Component class="javax.swing.JButton" name="jButtonBuscarPessoa">
           <Properties>
             <Property name="text" type="java.lang.String" value="..."/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscaPessoaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarPessoaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtEmail">
@@ -336,6 +345,14 @@
     <Component class="javax.swing.JButton" name="jButtonSalvar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Salvar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSalvarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonCancelar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
     </Component>
   </SubComponents>
