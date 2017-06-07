@@ -155,6 +155,24 @@ public class CadastroMarca extends javax.swing.JInternalFrame {
         return marca;
     }
     
+    public void preencheMarca(Marca marca) {
+        String id = String.valueOf(marca.getId());
+        String nome = String.valueOf(marca.getNome());
+        
+        jTextField1.setText(id);
+        jTextFieldDescricao.setText(nome);
+    }
+    
+    public Integer retornaCodigo() {
+        Integer id = Integer.parseInt(jTextField1.getText());
+        
+        return id;
+    }
+    
+    public boolean verificaExistencia() {
+        return !jTextField1.getText().isEmpty();
+    }
+    
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);

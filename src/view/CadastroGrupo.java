@@ -162,6 +162,24 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         return grupo;
     }
     
+    public void preencheGrupo(Grupo grupo) {
+        String id = String.valueOf(grupo.getId());
+        String nome = String.valueOf(grupo.getNome());
+        
+        jTextField1.setText(id);
+        jTextFieldDescricao.setText(nome);
+    }
+    
+    public boolean verificaExistencia() {
+        return !jTextField1.getText().isEmpty();
+    }
+    
+    public Integer retornaCodigo() {
+        Integer id = Integer.parseInt(jTextField1.getText());
+        
+        return id;
+    }
+    
     public void setPosicao() {
         Dimension d = this.getDesktopPane().getSize();
         this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);

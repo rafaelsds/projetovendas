@@ -1,17 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
 
-import dao.TransportadorDao;
+import dao.GrupoDao;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Transportador;
+import model.Grupo;
 
-public class ListagemTransportador extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author comp15
+ */
+public class ListagemGrupo extends javax.swing.JInternalFrame {
     
-    CadastroTransportador cadastroTransportador;
+    CadastroGrupo cadastroGrupo;
     
-    public ListagemTransportador(CadastroTransportador cadastro) {
-        this.cadastroTransportador = cadastro;
+    /**
+     * Creates new form ListagemGrupo
+     */
+    public ListagemGrupo(CadastroGrupo cadastroGrupo) {
+        this.cadastroGrupo = cadastroGrupo;
         initComponents();
         criaTabela();
     }
@@ -25,12 +37,30 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableGrupos = new javax.swing.JTable();
         jButtonSelecionar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableTransportadores = new javax.swing.JTable();
 
         setClosable(true);
-        setTitle("Lista de Transportadores");
+        setTitle("Lista de Grupos");
+
+        jTableGrupos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NOME"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableGrupos);
 
         jButtonSelecionar.setText("Selecionar");
         jButtonSelecionar.addActionListener(new java.awt.event.ActionListener() {
@@ -39,45 +69,27 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
             }
         });
 
-        jTableTransportadores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "NOME", "PLACA"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTableTransportadores);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 341, Short.MAX_VALUE)
-                        .addComponent(jButtonSelecionar)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonSelecionar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSelecionar)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -86,8 +98,8 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
         // TODO add your handling code here:
         try {
-            cadastroTransportador.preencheTransportador(getLinha());
-        } catch (ClassNotFoundException e) {
+            cadastroGrupo.preencheGrupo(getLinha());
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
@@ -97,10 +109,10 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSelecionar;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableTransportadores;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableGrupos;
     // End of variables declaration//GEN-END:variables
-
+    
     private void criaTabela() {
         
         DefaultTableModel modelo = new DefaultTableModel() {
@@ -110,45 +122,42 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
             };
         };
         
-        TransportadorDao dao = new TransportadorDao();
+        GrupoDao dao = new GrupoDao();
         
-        jTableTransportadores.setModel(modelo);
+        jTableGrupos.setModel(modelo);
         
         modelo.addColumn("ID");
         modelo.addColumn("NOME");
-        modelo.addColumn("PLACA");
         
-        
-        jTableTransportadores.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableTransportadores.getColumnModel().getColumn(1).setPreferredWidth(200);
-        jTableTransportadores.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTableGrupos.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableGrupos.getColumnModel().getColumn(1).setPreferredWidth(200);
         
         try {
-            for (Transportador t : dao.getAll()) {
-                modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getPlaca()});
+            for (Grupo grupo : dao.getAll()) {
+                modelo.addRow(new Object[]{grupo.getId(), grupo.getNome()});
             }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Transportador getLinha() throws ClassNotFoundException {
+     public Grupo getLinha() throws ClassNotFoundException {
        
-        int selecionada = jTableTransportadores.getSelectedRow();
+        int selecionada = jTableGrupos.getSelectedRow();
         
-        Transportador t = new Transportador();
-        TransportadorDao dao = new TransportadorDao();
+        Grupo grupo = new Grupo();
+        GrupoDao dao = new GrupoDao();
 
         if (selecionada == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um transportador!");
         }
 
-        Object obj = jTableTransportadores.getValueAt(selecionada, 0);
+        Object obj = jTableGrupos.getValueAt(selecionada, 0);
         int codigo = (int) obj;
 
-        t = dao.getTransportador(codigo);
+        grupo = dao.getGrupo(codigo);
 
-        return t;
+        return grupo;
 
     }
     

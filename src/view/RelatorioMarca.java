@@ -1,14 +1,9 @@
 package view;
 
-import dao.CepDao;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import model.Cep;
 import dao.RelMarcaDao;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;

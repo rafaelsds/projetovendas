@@ -1,17 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package view;
 
-import dao.TransportadorDao;
+import dao.MarcaDao;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Transportador;
+import model.Marca;
 
-public class ListagemTransportador extends javax.swing.JInternalFrame {
+public class ListagemMarca extends javax.swing.JInternalFrame {
     
-    CadastroTransportador cadastroTransportador;
+    CadastroMarca cadastroMarca;
     
-    public ListagemTransportador(CadastroTransportador cadastro) {
-        this.cadastroTransportador = cadastro;
+    public ListagemMarca(CadastroMarca cadastroMarca) {
+        this.cadastroMarca = cadastroMarca;
         initComponents();
         criaTabela();
     }
@@ -25,12 +30,30 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableMarcas = new javax.swing.JTable();
         jButtonSelecionar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableTransportadores = new javax.swing.JTable();
 
         setClosable(true);
-        setTitle("Lista de Transportadores");
+        setTitle("Lista de Marcas");
+
+        jTableMarcas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NOME"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableMarcas);
 
         jButtonSelecionar.setText("Selecionar");
         jButtonSelecionar.addActionListener(new java.awt.event.ActionListener() {
@@ -39,45 +62,27 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
             }
         });
 
-        jTableTransportadores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "NOME", "PLACA"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTableTransportadores);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 341, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonSelecionar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSelecionar)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -86,8 +91,8 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
         // TODO add your handling code here:
         try {
-            cadastroTransportador.preencheTransportador(getLinha());
-        } catch (ClassNotFoundException e) {
+            cadastroMarca.preencheMarca(getLinha());
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
@@ -97,10 +102,10 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSelecionar;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableTransportadores;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableMarcas;
     // End of variables declaration//GEN-END:variables
-
+    
     private void criaTabela() {
         
         DefaultTableModel modelo = new DefaultTableModel() {
@@ -110,45 +115,42 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
             };
         };
         
-        TransportadorDao dao = new TransportadorDao();
+        MarcaDao dao = new MarcaDao();
         
-        jTableTransportadores.setModel(modelo);
+        jTableMarcas.setModel(modelo);
         
         modelo.addColumn("ID");
         modelo.addColumn("NOME");
-        modelo.addColumn("PLACA");
         
-        
-        jTableTransportadores.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableTransportadores.getColumnModel().getColumn(1).setPreferredWidth(200);
-        jTableTransportadores.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTableMarcas.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableMarcas.getColumnModel().getColumn(1).setPreferredWidth(200);
         
         try {
-            for (Transportador t : dao.getAll()) {
-                modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getPlaca()});
+            for (Marca marca : dao.getAll()) {
+                modelo.addRow(new Object[]{marca.getId(), marca.getNome()});
             }
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Transportador getLinha() throws ClassNotFoundException {
+     public Marca getLinha() throws ClassNotFoundException {
        
-        int selecionada = jTableTransportadores.getSelectedRow();
+        int selecionada = jTableMarcas.getSelectedRow();
         
-        Transportador t = new Transportador();
-        TransportadorDao dao = new TransportadorDao();
+        Marca marca = new Marca();
+        MarcaDao dao = new MarcaDao();
 
         if (selecionada == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um transportador!");
         }
 
-        Object obj = jTableTransportadores.getValueAt(selecionada, 0);
+        Object obj = jTableMarcas.getValueAt(selecionada, 0);
         int codigo = (int) obj;
 
-        t = dao.getTransportador(codigo);
+        marca = dao.getMarca(codigo);
 
-        return t;
+        return marca;
 
     }
     

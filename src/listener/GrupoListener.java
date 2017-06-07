@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Grupo;
 import view.CadastroGrupo;
+import view.ListagemGrupo;
 
 public class GrupoListener implements ActionListener {
     
@@ -26,8 +27,14 @@ public class GrupoListener implements ActionListener {
                 try {
                     grupo = frame.getGrupo();
                     try {
-                        dao.insert(grupo);
-                        JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                        if(frame.verificaExistencia()) {
+                            dao.update(frame.retornaCodigo(), grupo);
+                            JOptionPane.showMessageDialog(null, "Grupo atualizado com sucesso!");
+                        } else {
+                            dao.insert(grupo);
+                            JOptionPane.showMessageDialog(null, "Grupo cadastrado com sucesso!");
+                        }
+                        
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
@@ -37,7 +44,10 @@ public class GrupoListener implements ActionListener {
                 break;
             
             case "BUSCAR":
-                //TODO
+                ListagemGrupo listaGrupo = new ListagemGrupo(frame);
+                frame.getDesktopPane().add(listaGrupo);
+                listaGrupo.setPosicao();
+                listaGrupo.setVisible(true);
                 break;
                 
             case "CANCELAR":

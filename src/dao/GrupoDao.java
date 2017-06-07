@@ -184,7 +184,7 @@ public class GrupoDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from grupo where cod = ?";
+            String sql = "select * from grupo where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);

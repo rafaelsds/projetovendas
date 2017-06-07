@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Marca;
 import view.CadastroMarca;
+import view.ListagemMarca;
 
 public class MarcaListener implements ActionListener {
     
@@ -28,8 +29,14 @@ public class MarcaListener implements ActionListener {
                     marca = frame.getMarca();
 
                     try {
-                        dao.insert(marca);
-                        JOptionPane.showMessageDialog(null, "Marca cadastrada com sucesso!");
+                        if (frame.verificaExistencia()) {
+                            dao.update(frame.retornaCodigo(), marca);
+                            JOptionPane.showMessageDialog(null, "Marca atualizada com sucesso!");
+                        } else {
+                            dao.insert(marca);
+                            JOptionPane.showMessageDialog(null, "Marca cadastrada com sucesso!");
+                        }
+                        
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
@@ -39,7 +46,10 @@ public class MarcaListener implements ActionListener {
                 break;
                 
             case "BUSCAR":
-                //TODO
+                ListagemMarca listaMarca = new ListagemMarca(frame);
+                frame.getDesktopPane().add(listaMarca);
+                listaMarca.setPosicao();
+                listaMarca.setVisible(true);
                 break;
             
             case "CANCELAR":
