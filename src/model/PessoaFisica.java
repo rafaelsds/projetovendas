@@ -1,6 +1,8 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 public class PessoaFisica {
     
@@ -8,8 +10,9 @@ public class PessoaFisica {
     private Integer idPessoa;
     private String cpf;
     private String rg;
-    private String sexo;
+    private Sexo sexo;
     private Date dataNascimento;
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
     
     public Integer getId() {
         return id;
@@ -43,19 +46,27 @@ public class PessoaFisica {
         this.rg = rg;
     }
 
-    public String getSexo() {
+    public Sexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-
+    
     public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setDataNascimento(String dataNascimento) {
+        try
+        {
+            this.dataNascimento = FORMATTER.parse(dataNascimento);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Erro: "+e.getMessage());
+        }
+        
     }
 }

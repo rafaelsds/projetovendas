@@ -38,6 +38,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemProdutos = new javax.swing.JMenuItem();
+        jMenuItemPessoa1 = new javax.swing.JMenuItem();
+        jMenuItemPessoa2 = new javax.swing.JMenuItem();
         jMenuItemPessoa = new javax.swing.JMenuItem();
         jMenuItemVenda = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -86,6 +88,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuCadastro.add(jMenuItemProdutos);
+
+        jMenuItemPessoa1.setText("Pessoa Física");
+        jMenuItemPessoa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPessoa1ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemPessoa1);
+
+        jMenuItemPessoa2.setText("Pessoa Jurídica");
+        jMenuItemPessoa2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPessoa2ActionPerformed(evt);
+            }
+        });
+        jMenuCadastro.add(jMenuItemPessoa2);
 
         jMenuItemPessoa.setText("Pessoa");
         jMenuItemPessoa.addActionListener(new java.awt.event.ActionListener() {
@@ -309,6 +327,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         relatorioMarca.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItemPessoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPessoa1ActionPerformed
+        CadastroPessoaFisica cadastroPessoaFisica = new CadastroPessoaFisica();
+        jDesktopPanelPrincipal.add(cadastroPessoaFisica);
+        cadastroPessoaFisica.setPosicao();
+        cadastroPessoaFisica.setVisible(true);
+    }//GEN-LAST:event_jMenuItemPessoa1ActionPerformed
+
+    private void jMenuItemPessoa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPessoa2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemPessoa2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -363,6 +392,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemMunicipio;
     private javax.swing.JMenuItem jMenuItemMunicipio1;
     private javax.swing.JMenuItem jMenuItemPessoa;
+    private javax.swing.JMenuItem jMenuItemPessoa1;
+    private javax.swing.JMenuItem jMenuItemPessoa2;
     private javax.swing.JMenuItem jMenuItemProdutos;
     private javax.swing.JMenuItem jMenuItemVenda;
     private javax.swing.JPopupMenu.Separator jSeparator1;
