@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Municipio;
 import view.CadastroMunicipio;
+import view.ListagemMunicipio;
 
 public class MunicipioListener implements ActionListener {
     
@@ -26,8 +27,14 @@ public class MunicipioListener implements ActionListener {
                 try {
                     cidade = frame.getMunicipio();
                     try {
-                        dao.insert(cidade);
-                        JOptionPane.showMessageDialog(null, "Municipio cadastrado com sucesso!");
+                        if (frame.verificaExistencia()) {
+                            dao.update(frame.retornarCodigo(), cidade);
+                            JOptionPane.showMessageDialog(null, "Municipio atualizado com sucesso!");
+                        } else {
+                            dao.insert(cidade);
+                            JOptionPane.showMessageDialog(null, "Municipio cadastrado com sucesso!");
+                        }
+                        
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
@@ -39,6 +46,13 @@ public class MunicipioListener implements ActionListener {
             
             case "CANCELAR":
                 frame.dispose();
+                break;
+            
+            case "BUSCAR":
+                ListagemMunicipio listaMunicipio = new ListagemMunicipio(frame);
+                frame.getDesktopPane().add(listaMunicipio);
+                listaMunicipio.setPosicao();
+                listaMunicipio.setVisible(true);
                 break;
         }
     }

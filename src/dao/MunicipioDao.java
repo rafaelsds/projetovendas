@@ -100,7 +100,7 @@ public class MunicipioDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update municipio set ds_municipio = ?, cod_ibge = ? where id = ?";
+            String sql = "update municipio set ds_municipio = ?, cd_ibge = ? where id = ?";
             pst = conn.prepareStatement(sql);
             
             pst.setString(1, municipio.getNome());
@@ -152,7 +152,7 @@ public class MunicipioDao {
                 
                 Integer id = rs.getInt("id");
                 String ds_municipio = rs.getString("ds_municipio");
-                String cod_ibge = rs.getString("cod_ibge");
+                String cod_ibge = rs.getString("cd_ibge");
 
                 Municipio municipio = new Municipio();
 
@@ -188,7 +188,7 @@ public class MunicipioDao {
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from municipio where cod = ?";
+            String sql = "select * from municipio where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
@@ -197,7 +197,7 @@ public class MunicipioDao {
                 
                 Integer id = rs.getInt("id");
                 String ds_municipio = rs.getString("ds_municipio");
-                String cod_ibge = rs.getString("cod_ibge");
+                String cod_ibge = rs.getString("cd_ibge");
                 
                 Municipio municipio = new Municipio();
 

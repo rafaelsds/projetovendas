@@ -3,6 +3,7 @@
 import converter.DateConverter;
 import java.awt.Dimension;
 import java.text.ParseException;
+import java.util.Date;
 import javax.swing.text.MaskFormatter;
 import listener.MetasListener;
 import model.Meta;
@@ -232,6 +233,30 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
         meta.setDataFinal(DateConverter.formatarData(jFormattedTextFieldDataFinal.getText(), "dd/MM/yyyy"));
         
         return meta;
+    }
+    
+    public boolean verificaExistencia() {
+        return !jTextField4.getText().isEmpty();
+    }
+    
+    public Integer retornaCodigo() {
+        Integer id = Integer.parseInt(jTextField4.getText());
+        
+        return id;
+    }
+    
+    public void preencheMeta(Meta meta) {
+        String id = String.valueOf(meta.getId());
+        String nome = String.valueOf(meta.getDescricao());
+        String valor = String.valueOf(meta.getValor());
+        Date inicio = meta.getDataInicio();
+        Date dt_final = meta.getDataFinal();
+        
+        jTextField4.setText(id);
+        jTextFieldDescricao.setText(nome);
+        jTextFieldValor.setText(valor);
+        jFormattedTextFieldDataInicio.setValue(inicio);
+        jFormattedTextFieldDataFinal.setValue(dt_final);
     }
     
     public void setPosicao() {

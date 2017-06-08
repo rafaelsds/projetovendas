@@ -197,12 +197,12 @@ public class MetaDao {
         return lista;
     }
 
-    public Cep getCep(int codigo) throws ClassNotFoundException {
+    public Meta getMeta(int codigo) throws ClassNotFoundException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from cep where cod = ?";
+            String sql = "select * from meta where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
@@ -210,14 +210,20 @@ public class MetaDao {
             if (rs.next()) {
 
                 Integer id = rs.getInt("id");
-                String nr_cep = rs.getString("nr_cpf");
+                String ds_meta = rs.getString("ds_meta");
+                Integer vl_meta = rs.getInt("vl_meta");
+                Date data_inicio = rs.getDate("dt_inicio_vigencia");
+                Date data_final = rs.getDate("dt_final_vigencia");
 
-                Cep cep = new Cep();
+                Meta meta = new Meta();
 
-                cep.setId(id);
-                cep.setCep(nr_cep);
+                meta.setId(id);
+                meta.setDescricao(ds_meta);
+                meta.setValor(vl_meta);
+                meta.setDataInicio(data_inicio);
+                meta.setDataFinal(data_final);
 
-                return cep;
+                return meta;
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());

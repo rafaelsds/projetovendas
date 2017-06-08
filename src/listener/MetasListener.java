@@ -7,6 +7,7 @@ import java.text.ParseException;
 import javax.swing.JOptionPane;
 import model.Meta;
 import view.CadastroMetas;
+import view.ListagemMetas;
 
 public class MetasListener implements ActionListener {
     
@@ -27,8 +28,14 @@ public class MetasListener implements ActionListener {
                 try {
                     meta = frame.getMeta();
                     try {
-                        dao.insert(meta);
-                        JOptionPane.showMessageDialog(null, "Meta cadastrada com sucesso!");
+                        if(frame.verificaExistencia()) {
+                            dao.update(frame.retornaCodigo(), meta);
+                            JOptionPane.showMessageDialog(null, "Meta atualizada com sucesso!");
+                        } else {
+                            dao.insert(meta);
+                            JOptionPane.showMessageDialog(null, "Meta cadastrada com sucesso!");
+                        }
+                        
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
@@ -40,6 +47,15 @@ public class MetasListener implements ActionListener {
                 
             case "CANCELAR":
                 frame.dispose();
+                break;
+                
+            case "BUSCAR":
+                ListagemMetas listaMetas = new ListagemMetas(frame);
+                frame.getDesktopPane().add(listaMetas);
+                listaMetas.setPosicao();
+                listaMetas.setVisible(true);
+                break;
+                
         }
     }
     
