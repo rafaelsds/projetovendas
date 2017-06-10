@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Marca" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27a669b2-dd98-40f7-89a7-99b422fcb443">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Default3Valores" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27a669b2-dd98-40f7-89a7-99b422fcb443">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="67"/>
 	<property name="ireport.y" value="0"/>
 	<property name="net.sf.jasperreports.print.keep.full.text" value="tabular"/>
 	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
@@ -14,22 +14,18 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="id_p" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ds_marca_p" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="title" class="java.lang.String"/>
+	<parameter name="d1" class="java.lang.String"/>
+	<parameter name="d2" class="java.lang.String"/>
+	<parameter name="d3" class="java.lang.String"/>
+	<parameter name="d4" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select id,ds_marca
-from marca
-where (id = $P{id_p}
-or $P{id_p} is null)
-and (upper(ds_marca) like upper(('%'+$P{ds_marca_p}+'%'))
-or $P{ds_marca_p} is null)]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="ID" class="java.lang.Integer"/>
-	<field name="DS_MARCA" class="java.lang.String"/>
+	<field name="v1" class="java.lang.Integer"/>
+	<field name="v2" class="java.lang.String"/>
+	<field name="v3" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
 		<groupHeader>
@@ -41,20 +37,27 @@ or $P{ds_marca_p} is null)]]>
 						<textElement verticalAlignment="Top">
 							<font isBold="false"/>
 						</textElement>
-						<textFieldExpression><![CDATA["ID"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{d1}]]></textFieldExpression>
 					</textField>
 					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="120" y="0" width="142" height="23" forecolor="#FFFFFF" uuid="d7e22912-58a5-40c6-b48c-7f06b2554028"/>
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="120" y="0" width="167" height="23" forecolor="#FFFFFF" uuid="d7e22912-58a5-40c6-b48c-7f06b2554028"/>
 						<textElement textAlignment="Justified">
 							<font isBold="false"/>
 						</textElement>
-						<textFieldExpression><![CDATA["Descrição"]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{d2}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="326" y="0" width="89" height="23" forecolor="#FFFFFF" uuid="3b627bc7-fa6a-491a-9728-4e6fc7031aab"/>
+						<textElement textAlignment="Justified">
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$P{d3}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="2"/>
+			<band/>
 		</groupFooter>
 	</group>
 	<group name="Group2">
@@ -68,17 +71,17 @@ or $P{ds_marca_p} is null)]]>
 	</background>
 	<title>
 		<band height="132" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="132" y="28" width="366" height="75" uuid="414a9f31-9db4-4121-baae-325eea05d15c"/>
-				<textElement textAlignment="Center">
-					<font fontName="Verdana" size="35" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Relatório de Marcas]]></text>
-			</staticText>
 			<image>
 				<reportElement x="13" y="10" width="107" height="93" uuid="c1b4814f-15eb-463b-ad65-1ad5490ad054"/>
-				<imageExpression><![CDATA["C:\\Users\\TI\\Documents\\Unesc\\logo_unesc.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement style="Title" x="120" y="10" width="421" height="93" uuid="8951d169-b71c-467f-8fd2-f58b8bf405a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Verdana" size="33" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -90,13 +93,17 @@ or $P{ds_marca_p} is null)]]>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="120" y="0" width="142" height="20" uuid="1a3283e3-ce86-4198-a86d-4e0a68fb8ba0"/>
-				<textFieldExpression><![CDATA[$F{DS_MARCA}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="13" y="0" width="89" height="20" uuid="f63c8254-0b9a-4c5a-81e3-abfe2c87c103"/>
 				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{v1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="1" width="167" height="20" uuid="1a3283e3-ce86-4198-a86d-4e0a68fb8ba0"/>
+				<textFieldExpression><![CDATA[$F{v2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="1" width="89" height="20" uuid="2b03d286-4032-451b-8ad5-b888a2623602"/>
+				<textFieldExpression><![CDATA[$F{v3}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -111,25 +118,25 @@ or $P{ds_marca_p} is null)]]>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="13" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="c80561ce-3073-4794-9b15-8c6fb02deedd"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="c80561ce-3073-4794-9b15-8c6fb02deedd"/>
 				<textField evaluationTime="Report">
-					<reportElement style="Column header" x="513" y="-1" width="40" height="13" forecolor="#FFFFFF" uuid="2457c68e-75ad-4e24-b492-8974f09b0972"/>
+					<reportElement style="Column header" x="512" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="2457c68e-75ad-4e24-b492-8974f09b0972"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Column header" x="433" y="-1" width="80" height="13" forecolor="#FFFFFF" uuid="d612d0a4-7fdc-48d0-ba48-07e777712691"/>
+					<reportElement style="Column header" x="429" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="d612d0a4-7fdc-48d0-ba48-07e777712691"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="754e6f21-379c-48ee-9c42-f4fdc30e8faa"/>
+					<reportElement style="Column header" x="2" y="0" width="197" height="20" forecolor="#FFFFFF" uuid="754e6f21-379c-48ee-9c42-f4fdc30e8faa"/>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="false"/>
 					</textElement>

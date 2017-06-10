@@ -12,11 +12,11 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-public class RelatorioMarca extends javax.swing.JInternalFrame {
+public class RelatorioGrupo extends javax.swing.JInternalFrame {
     
     RelatorioDefaultDao relatorioDao = new RelatorioDefaultDao();
     
-    public RelatorioMarca() {
+    public RelatorioGrupo() {
         initComponents();
     }
 
@@ -98,15 +98,15 @@ public class RelatorioMarca extends javax.swing.JInternalFrame {
         
         //Paâmetros do relatório
             param.put("logo", image);
-            param.put("title","Relatório de Marcas");
+            param.put("title","Relatório de Grupos");
             param.put("d1","ID");
             param.put("d2","Descrição");
         //
         
         //Parâmetros da consulta
-            tabela="marca";
+            tabela="grupo";
             campo1="id";
-            campo2="ds_marca";
+            campo2="ds_grupo";
             parametro1=jTxId.getText();
             parametro2=jTxtDescricao.getText();
         //
@@ -120,7 +120,6 @@ public class RelatorioMarca extends javax.swing.JInternalFrame {
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao gerar relatório: "+ex);
         }
-    
     }//GEN-LAST:event_jButtonGerarActionPerformed
 
     private void jTxtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDescricaoActionPerformed

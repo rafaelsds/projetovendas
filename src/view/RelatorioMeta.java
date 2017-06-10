@@ -12,11 +12,11 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-public class RelatorioMarca extends javax.swing.JInternalFrame {
+public class RelatorioMeta extends javax.swing.JInternalFrame {
     
     RelatorioDefaultDao relatorioDao = new RelatorioDefaultDao();
     
-    public RelatorioMarca() {
+    public RelatorioMeta() {
         initComponents();
     }
 
@@ -90,29 +90,31 @@ public class RelatorioMarca extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarActionPerformed
-        String tabela, campo1, campo2, parametro1, parametro2;
-        InputStream jasperIS = this.getClass().getResourceAsStream("../reports/default2Valores.jasper");
+        String tabela, campo1, campo2, campo3, parametro1, parametro2;
+        InputStream jasperIS = this.getClass().getResourceAsStream("../reports/default3Valores.jasper");
         InputStream image = this.getClass().getResourceAsStream("../images/logo_unesc.jpg");
         Map<String, Object> param = new HashMap<>();
         JasperPrint jp = null;
         
         //Paâmetros do relatório
             param.put("logo", image);
-            param.put("title","Relatório de Marcas");
+            param.put("title","Relatório de Metas");
             param.put("d1","ID");
             param.put("d2","Descrição");
+            param.put("d3","Vl. Meta");
         //
         
         //Parâmetros da consulta
-            tabela="marca";
+            tabela="meta";
             campo1="id";
-            campo2="ds_marca";
+            campo2="ds_meta";
+            campo3="vl_meta";
             parametro1=jTxId.getText();
             parametro2=jTxtDescricao.getText();
         //
         
         try {
-            JRResultSetDataSource rel = new JRResultSetDataSource(relatorioDao.getAll(tabela,campo1,campo2,parametro1,parametro2));           
+            JRResultSetDataSource rel = new JRResultSetDataSource(relatorioDao.getAll(tabela,campo1,campo2, campo3,parametro1,parametro2));           
             jp = JasperFillManager.fillReport(jasperIS, param, rel);
             JasperViewer jv = new JasperViewer(jp,false);
             jv.setVisible(true);
@@ -120,7 +122,6 @@ public class RelatorioMarca extends javax.swing.JInternalFrame {
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao gerar relatório: "+ex);
         }
-    
     }//GEN-LAST:event_jButtonGerarActionPerformed
 
     private void jTxtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDescricaoActionPerformed

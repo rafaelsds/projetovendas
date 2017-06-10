@@ -1,6 +1,6 @@
  package view;
 
-import converter.DateConverter;
+import utility.DateConverter;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.util.Date;
