@@ -6,6 +6,7 @@
 package view;
 
 import dao.GrupoDao;
+import exceptions.BancoException;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,12 +19,20 @@ import model.Grupo;
 public class ListagemGrupo extends javax.swing.JInternalFrame {
     
     CadastroGrupo cadastroGrupo;
+    CadastroProdutos cadastroProdutos;
     
     /**
      * Creates new form ListagemGrupo
+     * @param cadastroGrupo
      */
     public ListagemGrupo(CadastroGrupo cadastroGrupo) {
         this.cadastroGrupo = cadastroGrupo;
+        initComponents();
+        criaTabela();
+    }
+    
+    public ListagemGrupo(CadastroProdutos cadastroProdutos) {
+        this.cadastroProdutos = cadastroProdutos;
         initComponents();
         criaTabela();
     }
@@ -75,11 +84,11 @@ public class ListagemGrupo extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonSelecionar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 347, Short.MAX_VALUE)
+                        .addComponent(jButtonSelecionar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -96,14 +105,23 @@ public class ListagemGrupo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
+        try{
+            if(jTableGrupos.getSelectedRow() <0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
             cadastroGrupo.preencheGrupo(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            this.dispose();
+        }catch(Exception e){
         }
-        
-        this.dispose();
+         
+        try{
+            if(jTableGrupos.getSelectedRow() <0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
+            cadastroProdutos.preencheGrupo(getLinha());
+            this.dispose();
+        }catch(Exception e){
+        }
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -136,21 +154,17 @@ public class ListagemGrupo extends javax.swing.JInternalFrame {
             for (Grupo grupo : dao.getAll()) {
                 modelo.addRow(new Object[]{grupo.getId(), grupo.getNome()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Grupo getLinha() throws ClassNotFoundException {
+     public Grupo getLinha() throws BancoException {
        
         int selecionada = jTableGrupos.getSelectedRow();
         
         Grupo grupo = new Grupo();
         GrupoDao dao = new GrupoDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um transportador!");
-        }
 
         Object obj = jTableGrupos.getValueAt(selecionada, 0);
         int codigo = (int) obj;

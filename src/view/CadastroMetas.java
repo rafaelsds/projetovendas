@@ -4,6 +4,7 @@ import utility.DateConverter;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 import listener.MetasListener;
 import model.Meta;
@@ -17,6 +18,7 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
         jButtonSalvar.setActionCommand("SALVAR");
         jButtonCancelar.setActionCommand("CANCELAR");
         jButtonBuscar.setActionCommand("BUSCAR");
+        jButtonCancelar1.setActionCommand("EXCLUIR");
         
         MaskFormatter dataMaskInicio = new MaskFormatter();
         MaskFormatter dataMaskFim = new MaskFormatter();
@@ -54,6 +56,7 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
         jFormattedTextFieldDataFinal = new javax.swing.JFormattedTextField();
         jButtonCancelar = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonCancelar1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Metas");
@@ -158,6 +161,13 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonCancelar1.setText("Excluir");
+        jButtonCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,6 +180,8 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCancelar)))
                 .addContainerGap())
         );
@@ -181,8 +193,9 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
-                    .addComponent(jButtonCancelar))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonCancelar1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -193,8 +206,8 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldDescricaoActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        // TODO add your handling code here:
         listener.actionPerformed(evt);
+        limpar();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -207,10 +220,27 @@ public class CadastroMetas extends javax.swing.JInternalFrame {
         listener.actionPerformed(evt);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
+    private void jButtonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar1ActionPerformed
+        if(!jTextField4.getText().isEmpty()){
+            if (JOptionPane.showConfirmDialog(null,"Deseja excluir esse registro?","Sistema de Vendas",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
+               listener.actionPerformed(evt); 
+               limpar();
+            }
+        }
+    }//GEN-LAST:event_jButtonCancelar1ActionPerformed
+
+    public void limpar(){
+        jTextFieldDescricao.setText("");
+        jTextField4.setText("");
+        jTextFieldValor.setText("");
+        jFormattedTextFieldDataFinal.setText("");
+        jFormattedTextFieldDataInicio.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCancelar1;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataFinal;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataInicio;

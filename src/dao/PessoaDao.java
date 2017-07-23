@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exceptions.BancoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Pessoa;
 
-public class PessoaDao {
+public class PessoaDao extends DaoPadrao{
     
-    public void insert(Pessoa pessoa) {
+    public void insert(Pessoa pessoa)throws BancoException {
         Connection con = null;
         PreparedStatement pst = null;
 
@@ -19,7 +20,7 @@ public class PessoaDao {
             con = ConnectionFactory.getConnection();
             
             //String sql = "insert into pessoa(ds_nome, ds_endereco, nr_endereco, id_bairro, id_municipio, id_uf, id_cep, nr_telefone, ds_email) values(?,?,?,?,?,?,?,?,?)";
-            String sql = "insert into pessoa(ds_nome, ds_endereco, nr_endereco, nr_telefone, ds_email) values(?,?,?,?,?)";
+            String sql = "insert into pessoa(ds_nome, ds_endereco, nr_endereco, nr_telefone, ds_email, id_municipio, id_cep, id_bairro,id_uf) values(?,?,?,?,?,?,?,?,?)";
             
             pst = con.prepareStatement(sql);
             pst.setString(1, pessoa.getNome());
@@ -27,40 +28,21 @@ public class PessoaDao {
             pst.setString(3, pessoa.getNumeroEndereco());
             pst.setString(4, pessoa.getTelefone());
             pst.setString(5, pessoa.getEmail());
-            
+            pst.setInt(6, pessoa.getIdMunicipio());
+            pst.setInt(7, pessoa.getIdCep());
+            pst.setInt(8, pessoa.getIdBairro());
+            pst.setInt(9, pessoa.getIdUf());
             pst.execute();
             con.commit();
             
-        } catch (Exception e) {
-            System.out.println("ERRO1: " + e.getMessage());
-
-            if (con != null) {
-                try {
-                    con.rollback();
-                } catch (Exception ex) {
-                    System.out.println("ERRO2: " + ex.getMessage());
-                }
-            }
+        } catch(SQLException e) {  
+            erro(con, "Erro ao inserir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO3: " + e.getMessage());
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO4: " + e.getMessage());
-                }
-            }
+            finaliza(con, pst);
         }
     }
     
-    public void delete(int codigo) throws ClassNotFoundException {
+    public void delete(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -71,41 +53,19 @@ public class PessoaDao {
             pst.execute();
 
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao excluir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
     
-    public void update(Pessoa pessoa) throws ClassNotFoundException, SQLException {
+    public void update(Pessoa pessoa) throws BancoException, SQLException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update pessoa set ds_nome = ?, ds_endereco = ?, nr_endereco = ?, id_bairro = ?, id_municipio = ?, id_uf = ?, id_cep = ?, nr_telefone = ?, ds_email = ?"
+            String sql = "update pessoa set ds_nome = ?, ds_endereco = ?, nr_endereco = ?, id_bairro = ?, id_municipio = ?, id_cep = ?, nr_telefone = ?, ds_email = ?, id_uf=?"
                     + " where id = ?";
             pst = conn.prepareStatement(sql);
             
@@ -114,44 +74,23 @@ public class PessoaDao {
             pst.setString(3, pessoa.getNumeroEndereco());
             pst.setString(4, pessoa.getIdBairro().toString());
             pst.setString(5, pessoa.getIdMunicipio().toString());
-            pst.setString(6, pessoa.getIdUf().toString());
-            pst.setString(7, pessoa.getIdCep().toString());
-            pst.setString(8, pessoa.getTelefone());
-            pst.setString(9, pessoa.getEmail());
+          //  pst.setString(6, pessoa.getIdUf().toString());
+            pst.setString(6, pessoa.getIdCep().toString());
+            pst.setString(7, pessoa.getTelefone());
+            pst.setString(8, pessoa.getEmail());
+            pst.setInt(9, pessoa.getIdUf());
             pst.setInt(10, pessoa.getId());
 
             pst.execute();
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao atualizar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
     
-    public List<Pessoa> getAll() throws ClassNotFoundException {
+    public List<Pessoa> getAll() throws BancoException {
 
         List<Pessoa> lista = new ArrayList<>();
         Connection conn = null;
@@ -167,7 +106,7 @@ public class PessoaDao {
                 Pessoa pessoa = new Pessoa();
 
                 pessoa.setId(rs.getInt("id"));
-                pessoa.setNome(rs.getString("ds_marca"));
+                pessoa.setNome(rs.getString("ds_nome"));
                 pessoa.setEndereco(rs.getString("ds_endereco"));
                 pessoa.setEmail(rs.getString("ds_email"));
                 pessoa.setIdBairro(rs.getInt("id_bairro"));
@@ -179,28 +118,15 @@ public class PessoaDao {
            
                 lista.add(pessoa);
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return lista;
     }
     
-    public Pessoa getPessoa(int codigo) throws ClassNotFoundException {
+    public Pessoa getPessoa(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -216,7 +142,7 @@ public class PessoaDao {
                 Pessoa pessoa = new Pessoa();
                 
                 pessoa.setId(rs.getInt("id"));
-                pessoa.setNome(rs.getString("ds_marca"));
+                pessoa.setNome(rs.getString("ds_nome"));
                 pessoa.setEndereco(rs.getString("ds_endereco"));
                 pessoa.setEmail(rs.getString("ds_email"));
                 pessoa.setIdBairro(rs.getInt("id_bairro"));
@@ -228,23 +154,10 @@ public class PessoaDao {
 
                 return pessoa;
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return null;
     }

@@ -1,21 +1,31 @@
 package view;
 
 import dao.CepDao;
+import exceptions.BancoException;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cep;
 
 public class ListagemCep extends javax.swing.JInternalFrame {
-
-    private CadastroCep cadastroCep = new CadastroCep();
+    String view;
+    CadastroCep cadastroCep = new CadastroCep();
+    CadastroPessoa cadastroPessoa;
     
     public ListagemCep(CadastroCep cadastroCep) {
+        view="CADASTROCEP";
         this.cadastroCep = cadastroCep;
         initComponents();
         criaTabela();
     }
-
+    
+    public ListagemCep(CadastroPessoa cadastroPessoa) {
+        view="CADASTROPESSOA";
+        this.cadastroPessoa = cadastroPessoa;
+        initComponents();
+        criaTabela();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,14 +94,23 @@ public class ListagemCep extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
-            cadastroCep.preencheCep(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        
-        this.dispose();        
+        try{
+            if(jTableCeps.getSelectedRow() <0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            switch(view){
+                case "CADASTROCEP":
+                    cadastroCep.preencheCep(getLinha());
+                    break;
+                    
+                case "CADASTROPESSOA":
+                    cadastroPessoa.preencheCep(getLinha());
+                    break;
+            }
+            
+            this.dispose();
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, e.getMessage());
+        }      
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -125,21 +144,17 @@ public class ListagemCep extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{cep.getId(), cep.getCep()});
 
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
-    public Cep getLinha() throws ClassNotFoundException {
+    public Cep getLinha() throws BancoException {
        
         int selecionada = jTableCeps.getSelectedRow();
         
         Cep cep = new Cep();
         CepDao dao = new CepDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um CEP!");
-        }
 
         Object obj = jTableCeps.getValueAt(selecionada, 0);
         int codigo = (int) obj;

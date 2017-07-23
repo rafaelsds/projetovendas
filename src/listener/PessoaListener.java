@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Pessoa;
-import view.CadastroPessoa;
-import view.ListagemPessoa;
+import view.*;
 
 public class PessoaListener implements ActionListener {
     
@@ -32,7 +31,7 @@ public class PessoaListener implements ActionListener {
                     
                     try {
                         
-                        if (!frame.verificaExistencia()){
+                        if (frame.verificaExistencia()){
                             dao.update(pessoa);
                             JOptionPane.showMessageDialog(null, "Pessoa atualizada com sucesso!");
                         } else {
@@ -55,11 +54,41 @@ public class PessoaListener implements ActionListener {
                 listaPessoa.setVisible(true);
                 break;
             
+            case "BUSCARBAIRRO":
+                ListagemBairro listaBairro = new ListagemBairro(frame);
+                frame.getDesktopPane().add(listaBairro);
+                listaBairro.setPosicao();
+                listaBairro.setVisible(true);
+                break;
+                
+                
+            case "BUSCARCEP":
+                ListagemCep listagemCep = new ListagemCep(frame);
+                frame.getDesktopPane().add(listagemCep);
+                listagemCep.setPosicao();
+                listagemCep.setVisible(true);
+                break;
+                
+            case "BUSCARMUNICIPIO":
+                ListagemMunicipio listagemMunicipio = new ListagemMunicipio(frame);
+                frame.getDesktopPane().add(listagemMunicipio);
+                listagemMunicipio.setPosicao();
+                listagemMunicipio.setVisible(true);
+                break;
+                
             case "CANCELAR":
                 frame.dispose();
                 break;
+                                
+            case "EXCLUIR":
+                try{
+                    if(frame.verificaExistencia()) {
+                        dao.delete(frame.retornaCodigo());
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                    }
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }     
         }
-    }
-    
+    }    
 }
-

@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import listener.BairroListener;
 import model.Bairro;
 
@@ -25,6 +26,7 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
         jButtonSalvar.setActionCommand("SALVAR");
         jButtonCancelar.setActionCommand("CANCELAR");
         jButtonBuscar.setActionCommand("BUSCAR");
+        jButtonCancelar1.setActionCommand("EXCLUIR");
     }
 
     /**
@@ -44,6 +46,7 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
         jButtonBuscar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonCancelar1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Bairro");
@@ -118,6 +121,13 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonCancelar1.setText("Excluir");
+        jButtonCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,8 +136,10 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCancelar1)
+                        .addGap(7, 7, 7)
                         .addComponent(jButtonCancelar))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,12 +150,11 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonCancelar1))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,6 +167,7 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
         listener.actionPerformed(evt);
+        limpar();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -168,10 +180,25 @@ public class CadastroBairro extends javax.swing.JInternalFrame {
         listener.actionPerformed(evt);
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
+    private void jButtonCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelar1ActionPerformed
+        if(!jTextFieldCodigo.getText().isEmpty()){
+            if (JOptionPane.showConfirmDialog(null,"Deseja excluir esse registro?","Sistema de Vendas",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
+               listener.actionPerformed(evt); 
+               limpar();
+            }
+        }
+    }//GEN-LAST:event_jButtonCancelar1ActionPerformed
+    
+    public void limpar(){
+        jTextFieldCodigo.setText("");
+        jTextFieldDescricao.setText("");
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCancelar1;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

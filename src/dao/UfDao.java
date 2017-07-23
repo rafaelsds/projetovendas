@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exceptions.BancoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Uf;
 
-public class UfDao {
-    public void insert(Uf uf) {
+public class UfDao extends DaoPadrao{
+    public void insert(Uf uf) throws BancoException{
         Connection con = null;
         PreparedStatement pst = null;
         
@@ -25,36 +26,14 @@ public class UfDao {
             pst.execute();
             con.commit();
             
-        } catch (Exception e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (con != null) {
-                try {
-                    con.rollback();
-                } catch (Exception ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+        } catch(SQLException e) {  
+            erro(con, "Erro ao inserir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO: " + e.getMessage());
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO: " + e.getMessage());
-                }
-            }
+            finaliza(con, pst);
         }
     }
     
-    public void delete(int codigo) throws ClassNotFoundException {
+    public void delete(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -65,36 +44,14 @@ public class UfDao {
             pst.execute();
 
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao excluir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
     
-    public void update(int codigo, Uf uf) throws ClassNotFoundException, SQLException {
+    public void update(int codigo, Uf uf) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -107,36 +64,14 @@ public class UfDao {
 
             pst.execute();
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao atualizar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
     
-    public List<Uf> getAll() throws ClassNotFoundException {
+    public List<Uf> getAll() throws BancoException {
         List<Uf> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pst = null;
@@ -158,33 +93,20 @@ public class UfDao {
 
                 lista.add(uf);
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return lista;
     }
     
-    public Uf getUf(int codigo) throws ClassNotFoundException {
+    public Uf getUf(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "select * from uf where cod = ?";
+            String sql = "select * from uf where id = ?";
 
             pst = conn.prepareStatement(sql);
             pst.setInt(1, codigo);
@@ -201,23 +123,10 @@ public class UfDao {
                 
                 return uf;
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return null;
     }

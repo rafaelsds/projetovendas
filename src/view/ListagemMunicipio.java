@@ -10,24 +10,28 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Municipio;
+import exceptions.BancoException;
 
-/**
- *
- * @author Leonardo
- */
+
 public class ListagemMunicipio extends javax.swing.JInternalFrame {
-
-    private CadastroMunicipio cadastroMunicipio;
-    
-    /**
-     * Creates new form ListagemMunicipio
-     */
+    String view;
+    CadastroMunicipio cadastroMunicipio;
+    CadastroPessoa cadastroPessoa;
+            
     public ListagemMunicipio(CadastroMunicipio cadastroMunicipio) {
+        view="CADASTROMUNICIPIO";
         this.cadastroMunicipio = cadastroMunicipio;
         initComponents();
         criaTabela();
     }
-
+    
+    public ListagemMunicipio(CadastroPessoa cadastroPessoa) {
+        view="CADASTROPESSOA";
+        this.cadastroPessoa = cadastroPessoa;
+        initComponents();
+        criaTabela();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,14 +100,23 @@ public class ListagemMunicipio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
-            cadastroMunicipio.preencheMunicipio(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        try{
+            if(jTableMunicipios.getSelectedRow() <0){
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            }
+            switch(view){
+                case "CADASTROMUNICIPIO":
+                    cadastroMunicipio.preencheMunicipio(getLinha());
+                    break;
+                case "CADASTROPESSOA":
+                    cadastroPessoa.preencheMunicipio(getLinha());
+                     break;
+            }
+            
+            this.dispose();
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
-        this.dispose();
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -138,12 +151,12 @@ public class ListagemMunicipio extends javax.swing.JInternalFrame {
             for (Municipio municipio : dao.getAll()) {
                 modelo.addRow(new Object[]{municipio.getId(), municipio.getNome(), municipio.getIbge()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Municipio getLinha() throws ClassNotFoundException {
+     public Municipio getLinha() throws BancoException {
        
         int selecionada = jTableMunicipios.getSelectedRow();
         

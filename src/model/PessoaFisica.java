@@ -9,10 +9,21 @@ public class PessoaFisica {
     private Integer id;
     private Integer idPessoa;
     private String cpf;
+    private String nomePessoa;
     private String rg;
     private Sexo sexo;
     private Date dataNascimento;
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+
+    public String getNomePessoa() {
+        return nomePessoa;
+    }
+
+    public void setNomePessoa(String nomePessoa) {
+        this.nomePessoa = nomePessoa;
+    }
+    
+    
     
     public Integer getId() {
         return id;
@@ -69,4 +80,8 @@ public class PessoaFisica {
         }
         
     }
+    
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }    
 }

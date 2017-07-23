@@ -10,13 +10,20 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Marca;
-
+import exceptions.BancoException;
 public class ListagemMarca extends javax.swing.JInternalFrame {
     
     CadastroMarca cadastroMarca;
+    CadastroProdutos cadastroProdutos;
     
     public ListagemMarca(CadastroMarca cadastroMarca) {
         this.cadastroMarca = cadastroMarca;
+        initComponents();
+        criaTabela();
+    }
+    
+    public ListagemMarca(CadastroProdutos cadastroProdutos) {
+        this.cadastroProdutos = cadastroProdutos;
         initComponents();
         criaTabela();
     }
@@ -89,14 +96,23 @@ public class ListagemMarca extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
+        try{
+            if(jTableMarcas.getSelectedRow() < 0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
             cadastroMarca.preencheMarca(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+            this.dispose();
+        }catch(Exception e){
+        } 
         
-        this.dispose();
+        try{
+            if(jTableMarcas.getSelectedRow() < 0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
+            cadastroProdutos.preencheMarca(getLinha());
+            this.dispose();
+        }catch(Exception e){
+        } 
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -129,21 +145,17 @@ public class ListagemMarca extends javax.swing.JInternalFrame {
             for (Marca marca : dao.getAll()) {
                 modelo.addRow(new Object[]{marca.getId(), marca.getNome()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Marca getLinha() throws ClassNotFoundException {
+     public Marca getLinha() throws BancoException {
        
         int selecionada = jTableMarcas.getSelectedRow();
         
         Marca marca = new Marca();
         MarcaDao dao = new MarcaDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um transportador!");
-        }
 
         Object obj = jTableMarcas.getValueAt(selecionada, 0);
         int codigo = (int) obj;

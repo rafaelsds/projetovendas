@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exceptions.BancoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Bairro;
 
-public class RelatorioDefaultDao {
+public class RelatorioDefaultDao extends DaoPadrao{
     /* Passar por parâmetro, o nome da tabela que deseja consultar, nome de atributo do id e descrição.
     Passar também caso desejar, o parâmetro de ID e Descrição
     */    
-    public ResultSet getAll(String tabela, String v1, String v2, String p1,String p2) {
+    public ResultSet getAll(String tabela, String v1, String v2, String p1,String p2)throws BancoException {
         if(p1.isEmpty()){
             p1="0";
         }
@@ -39,28 +40,15 @@ public class RelatorioDefaultDao {
             ResultSet rs = pst.executeQuery();
             return rs;
             
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return null;
     }
     
-    public ResultSet getAll(String tabela, String v1, String v2, String v3, String p1,String p2) {
+    public ResultSet getAll(String tabela, String v1, String v2, String v3, String p1,String p2)throws BancoException {
         if(p1.isEmpty()){
             p1="0";
         }
@@ -86,23 +74,10 @@ public class RelatorioDefaultDao {
             ResultSet rs = pst.executeQuery();
             return rs;
             
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return null;
     }

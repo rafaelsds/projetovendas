@@ -10,24 +10,32 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Meta;
-
+import exceptions.BancoException;
 /**
  *
  * @author Leonardo
  */
 public class ListagemMetas extends javax.swing.JInternalFrame {
-
+    String view;
     CadastroMetas cadastroMetas;
-    
+    CadastroVendedor cadastroVendedor;
     /**
      * Creates new form ListagemMetas
      */
     public ListagemMetas(CadastroMetas cadastroMetas) {
         this.cadastroMetas = cadastroMetas;
+        view="CADASTROMETA";
         initComponents();
         criaTabela();
     }
-
+    
+    public ListagemMetas(CadastroVendedor cadastroVendedor) {
+        this.cadastroVendedor = cadastroVendedor;
+        view="CADASTROVENDEDOR";
+        initComponents();
+        criaTabela();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,14 +104,24 @@ public class ListagemMetas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
-            cadastroMetas.preencheMeta(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        try{
+            if(jTableMetas.getSelectedRow() <0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
+            switch(view) {
+                case "CADASTROMETA":   
+                    cadastroMetas.preencheMeta(getLinha());
+                    break; 
+                    
+                case "CADASTROVENDEDOR":
+                    cadastroVendedor.preencheMeta(getLinha());
+                    break;
+            }
+            
+            this.dispose();
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
-        this.dispose();
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -142,22 +160,18 @@ public class ListagemMetas extends javax.swing.JInternalFrame {
             for (Meta meta : dao.getAll()) {
                 modelo.addRow(new Object[]{meta.getId(), meta.getDescricao(), meta.getValor(), meta.getDataInicio(), meta.getDataFinal()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
    
     
-    public Meta getLinha() throws ClassNotFoundException {
+    public Meta getLinha() throws BancoException {
        
         int selecionada = jTableMetas.getSelectedRow();
         
         Meta meta = new Meta();
         MetaDao dao = new MetaDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione uma meta!");
-        }
 
         Object obj = jTableMetas.getValueAt(selecionada, 0);
         int codigo = (int) obj;

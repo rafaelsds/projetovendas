@@ -1,6 +1,7 @@
 package listener;
 
 import dao.BairroDao;
+import exceptions.BancoException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class BairroListener implements ActionListener {
                             dao.insert(bairro);
                             JOptionPane.showMessageDialog(null, "Bairro cadastrado com sucesso!");
                         }
-                    } catch (ClassNotFoundException | SQLException err) {
+                    } catch (BancoException err) {
                         JOptionPane.showMessageDialog(null, err.getMessage());
                     }
                 } catch (Exception ex) {
@@ -55,6 +56,17 @@ public class BairroListener implements ActionListener {
                 listaBairro.setPosicao();
                 listaBairro.setVisible(true);
                 break;
+                
+            case "EXCLUIR":
+                try{
+                    if(frame.verificaExistencia()) {
+                        dao.delete(frame.retornaCodigo());
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                    }
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }    
+                
         }
         
     }

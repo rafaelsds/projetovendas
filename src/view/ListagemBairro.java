@@ -6,6 +6,7 @@
 package view;
 
 import dao.BairroDao;
+import exceptions.BancoException;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,16 +17,24 @@ import model.Bairro;
  * @author leonardo
  */
 public class ListagemBairro extends javax.swing.JInternalFrame {
-
-    private CadastroPessoa cadastroPessoa;
-    private final CadastroBairro cadastroBairro;
-
+    String view;
+    CadastroPessoa cadastroPessoa;
+    CadastroBairro cadastroBairro;
+    
     public ListagemBairro(CadastroBairro cadastroBairro) {
+        view="CADASTROBAIRRO";
         this.cadastroBairro = cadastroBairro;
         initComponents();
         criaTabela();
     }
 
+    public ListagemBairro(CadastroPessoa cadastroPessoa) {
+        view="CADASTROPESSOA";
+        this.cadastroPessoa = cadastroPessoa;
+        initComponents();
+        criaTabela();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,14 +103,25 @@ public class ListagemBairro extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        try {
-            cadastroBairro.preencheBairro(getLinha());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+         try{
+            if(jTableBairros.getSelectedRow() <0)
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            
+            switch(view) {
+                case "CADASTROBAIRRO":   
+                    cadastroBairro.preencheBairro(getLinha());
+                    break; 
+                    
+                case "CADASTROPESSOA":
+                    cadastroPessoa.preencheBairro(getLinha());
+                    break;
+                
+            }
+            
+            this.dispose();
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
-        this.dispose();
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -136,21 +156,17 @@ public class ListagemBairro extends javax.swing.JInternalFrame {
                 modelo.addRow(new Object[]{bairro.getId(), bairro.getNome()});
 
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
-    public Bairro getLinha() throws ClassNotFoundException {
+    public Bairro getLinha() throws BancoException {
        
         int selecionada = jTableBairros.getSelectedRow();
         
         Bairro bairro = new Bairro();
         BairroDao dao = new BairroDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um bairro!");
-        }
 
         Object obj = jTableBairros.getValueAt(selecionada, 0);
         int codigo = (int) obj;

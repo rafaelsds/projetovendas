@@ -55,6 +55,16 @@ public class MarcaListener implements ActionListener {
             case "CANCELAR":
                 frame.dispose();
                 break;
+                
+            case "EXCLUIR":
+                try{
+                    if(frame.verificaExistencia()) {
+                        dao.delete(frame.retornaCodigo());
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                    }
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
         }
     }
     

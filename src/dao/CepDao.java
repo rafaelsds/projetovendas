@@ -1,6 +1,7 @@
 package dao;
 
 import connection.ConnectionFactory;
+import exceptions.BancoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Cep;
 
-public class CepDao {
+public class CepDao extends DaoPadrao{
 
-    public void insert(Cep cep) {
+    public void insert(Cep cep)throws BancoException {
         Connection con = null;
         PreparedStatement pst = null;
 
         try {
             con = ConnectionFactory.getConnection();
 
-            String sql = "insert into cep (nr_cpf) values (?)";
+            String sql = "insert into cep (nr_cep) values (?)";
 
             pst = con.prepareStatement(sql);
             pst.setString(1, cep.getCep());
@@ -26,36 +27,14 @@ public class CepDao {
             pst.execute();
             con.commit();
 
-        } catch (Exception e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (con != null) {
-                try {
-                    con.rollback();
-                } catch (Exception ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+        } catch(SQLException e) {  
+            erro(con, "Erro ao inserir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO: " + e.getMessage());
-                }
-            }
-
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (Exception e) {
-                    System.out.println("ERRO: " + e.getMessage());
-                }
-            }
+            finaliza(con, pst);
         }
     }
 
-    public void delete(int codigo) throws ClassNotFoundException {
+    public void delete(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -66,41 +45,19 @@ public class CepDao {
             pst.execute();
 
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao excluir registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
 
-    public void update(int codigo, Cep cep) throws ClassNotFoundException, SQLException {
+    public void update(int codigo, Cep cep) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = ConnectionFactory.getConnection();
-            String sql = "update cep set nr_cpf = ? where id = ?";
+            String sql = "update cep set nr_cep = ? where id = ?";
             pst = conn.prepareStatement(sql);
 
             pst.setString(1, cep.getCep());
@@ -108,36 +65,14 @@ public class CepDao {
 
             pst.execute();
             conn.commit();
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
-
-            if (conn != null) {
-                try {
-                    conn.rollback();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao atualizar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
     }
 
-    public List<Cep> getAll() throws ClassNotFoundException {
+    public List<Cep> getAll() throws BancoException {
         List<Cep> lista = new ArrayList<>();
         Connection conn = null;
         PreparedStatement pst = null;
@@ -150,7 +85,7 @@ public class CepDao {
             while (rs.next()) {
 
                 Integer id = rs.getInt("id");
-                String nr_cep = rs.getString("nr_cpf");
+                String nr_cep = rs.getString("nr_cep");
 
                 Cep cep = new Cep();
 
@@ -159,28 +94,15 @@ public class CepDao {
 
                 lista.add(cep);
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return lista;
     }
 
-    public Cep getCep(int codigo) throws ClassNotFoundException {
+    public Cep getCep(int codigo) throws BancoException {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
@@ -193,7 +115,7 @@ public class CepDao {
             if (rs.next()) {
 
                 Integer id = rs.getInt("id");
-                String nr_cep = rs.getString("nr_cpf");
+                String nr_cep = rs.getString("nr_cep");
 
                 Cep cep = new Cep();
 
@@ -202,23 +124,10 @@ public class CepDao {
 
                 return cep;
             }
-        } catch (SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+        } catch(SQLException e) {  
+            erro(conn, "Erro ao buscar registro ", e);
         } finally {
-            if (pst != null) {
-                try {
-                    pst.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
-                }
-            }
+            finaliza(conn, pst);
         }
         return null;
     }

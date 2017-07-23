@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Transportador;
-
+import exceptions.BancoException;
 public class ListagemTransportador extends javax.swing.JInternalFrame {
     
     CadastroTransportador cadastroTransportador;
@@ -87,7 +87,7 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             cadastroTransportador.preencheTransportador(getLinha());
-        } catch (ClassNotFoundException e) {
+        } catch (BancoException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
@@ -127,12 +127,12 @@ public class ListagemTransportador extends javax.swing.JInternalFrame {
             for (Transportador t : dao.getAll()) {
                 modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getPlaca()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
      
-     public Transportador getLinha() throws ClassNotFoundException {
+     public Transportador getLinha() throws BancoException {
        
         int selecionada = jTableTransportadores.getSelectedRow();
         

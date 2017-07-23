@@ -6,6 +6,15 @@ public class Vendedor {
     private Integer idPessoa;
     private Integer idMeta;
     private Integer idComissao;
+    private String nomeVendedor;
+
+    public String getNomeVendedor() {
+        return nomeVendedor;
+    }
+
+    public void setNomeVendedor(String nomeVendedor) {
+        this.nomeVendedor = nomeVendedor;
+    }
     
     public Integer getId() {
         return id;

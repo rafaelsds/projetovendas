@@ -3,9 +3,12 @@ package view;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import dao.RelatorioDefaultDao;
+import exceptions.BancoException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -120,6 +123,8 @@ public class RelatorioMeta extends javax.swing.JInternalFrame {
             jv.setVisible(true);
             jv.toFront();
         } catch (JRException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao gerar relatório: "+ex);
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao gerar relatório: "+ex);
         }
     }//GEN-LAST:event_jButtonGerarActionPerformed

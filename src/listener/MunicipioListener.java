@@ -54,6 +54,16 @@ public class MunicipioListener implements ActionListener {
                 listaMunicipio.setPosicao();
                 listaMunicipio.setVisible(true);
                 break;
+                
+            case "EXCLUIR":
+                try{
+                    if(frame.verificaExistencia()) {
+                        dao.delete(frame.retornarCodigo());
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                    }
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }     
         }
     }
     

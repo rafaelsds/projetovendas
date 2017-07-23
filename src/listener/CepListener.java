@@ -53,6 +53,17 @@ public class CepListener implements ActionListener {
                 listaCep.setPosicao();
                 listaCep.setVisible(true);
                 break;
+                
+                
+            case "EXCLUIR":
+                try{
+                    if(frame.verificaExistencia()) {
+                        dao.delete(frame.retornaCodigo());
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
+                    }
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
         }
     }
     

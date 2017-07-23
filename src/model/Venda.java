@@ -4,12 +4,21 @@ public class Venda {
     
     private Integer id;
     private String descricao;
+    private String nomeCliente;
     private Integer idCliente;
     private Integer idVendedor;
     private Integer tipoPagamento;
     private Integer valorDesconto;
     private Integer valorAcrescimo;
 
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+    
     public Integer getId() {
         return id;
     }

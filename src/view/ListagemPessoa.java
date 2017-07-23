@@ -6,28 +6,49 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Pessoa;
 import model.Transportador;
-
+import exceptions.BancoException;
 public class ListagemPessoa extends javax.swing.JInternalFrame {
     
     CadastroPessoa cadastroPessoa;
+    CadastroPessoaFisica cadastroPessoaFisica;
+    CadastroVendedor cadastroVendedor;
+    CadastroVendas cadastroVendas;
+    String view;
     
     public ListagemPessoa(CadastroPessoa cadastro) {
         this.cadastroPessoa = cadastro;
+        view="CADASTROPESSOA";
         initComponents();
         criaTabela();
     }
     
+    public ListagemPessoa(CadastroPessoaFisica cadastroPessoaFisica) {
+        this.cadastroPessoaFisica = cadastroPessoaFisica;
+        view="CADASTROPESSOAFISICA";
+        initComponents();
+        criaTabela();
+    }
     
-    public Pessoa getLinha() throws ClassNotFoundException {
+    public ListagemPessoa(CadastroVendedor cadastroVendedor) {
+        this.cadastroVendedor = cadastroVendedor;
+        view="CADASTROVENDEDOR";
+        initComponents();
+        criaTabela();
+    }
+    
+    public ListagemPessoa(CadastroVendas cadastroVendas) {
+        this.cadastroVendas = cadastroVendas;
+        view="CADASTROVENDAS";
+        initComponents();
+        criaTabela();
+    }
+    
+    public Pessoa getLinha() throws BancoException {
        
         int selecionada = jTable.getSelectedRow();
         
         Pessoa pessoa = new Pessoa();
         PessoaDao dao = new PessoaDao();
-
-        if (selecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um registro!");
-        }
 
         Object obj = jTable.getValueAt(selecionada, 0);
         int codigo = (int) obj;
@@ -52,7 +73,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
         jTable = new javax.swing.JTable();
 
         setClosable(true);
-        setTitle("Lista de Transportadores");
+        setTitle("Lista de Pessoas");
 
         jButtonSelecionar.setText("Selecionar");
         jButtonSelecionar.addActionListener(new java.awt.event.ActionListener() {
@@ -77,6 +98,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -106,15 +128,34 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelecionarActionPerformed
-        // TODO add your handling code here:
-        
-        try {
-            cadastroPessoa.preenchePessoa(getLinha());
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        
-        this.dispose();
+        try{
+            if(jTable.getSelectedRow() <0){
+                throw new IllegalArgumentException("Nenhum registro selecionado!");
+            }
+            switch(view) {
+                case "CADASTROPESSOA":   
+                    cadastroPessoa.preenchePessoa(getLinha());
+                    break; 
+                    
+                case "CADASTROVENDEDOR":
+                    cadastroVendedor.preenchePessoa(getLinha());
+                    break;
+                
+                case "CADASTROVENDAS":
+                    cadastroVendas.preencheCliente(getLinha());
+                    break;
+                
+                case "CADASTROPESSOAFISICA":
+                    cadastroPessoaFisica.preenchePessoa(getLinha());
+                    break;
+                    
+            }
+            
+                
+            this.dispose();
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this, e.getMessage());
+        }        
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
 
@@ -150,7 +191,7 @@ public class ListagemPessoa extends javax.swing.JInternalFrame {
             for (Pessoa t : dao.getAll()) {
                 modelo.addRow(new Object[]{t.getId(), t.getNome(), t.getEndereco()});
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (BancoException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
